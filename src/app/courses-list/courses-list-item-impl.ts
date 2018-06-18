@@ -18,7 +18,7 @@ export class CoursesListItemImpl implements CoursesListItem {
     this.id = id;
     this.title = title;
     this.creation_date = creation_date;
-    this.duration = duration;
+    this.duration = duration + ' min';
     this.description = description;
   }
 
