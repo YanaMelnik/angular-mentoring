@@ -23,4 +23,14 @@ export class UnitsService {
       return `${minutes}min`;
     }
   }
+
+  static getDateString(date: Date): string {
+    const options = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    };
+
+    return date.toLocaleString('en-US', options);
+  }
 }

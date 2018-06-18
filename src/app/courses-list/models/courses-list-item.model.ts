@@ -1,30 +1,30 @@
 import { UnitsService } from '../../services/units.service';
 
-export interface CoursesListItem {
+export interface CoursesListItemModel {
   id: number;
   title: string;
-  creationDate: Date;
+  creationDate: string;
   duration: string;
   description: string;
 }
 
-export class CoursesListItemImpl implements CoursesListItem {
-  creationDate: Date;
-  description: string;
-  duration: string;
+export class CoursesListItem implements CoursesListItemModel {
   id: number;
   title: string;
+  creationDate: string;
+  duration: string;
+  description: string;
 
   constructor (
     id: number,
     title: string,
     creationDate: Date,
-    duration: string,
+    duration: number,
     description: string
   ) {
     this.id = id;
     this.title = title;
-    this.creationDate = creationDate;
+    this.creationDate = UnitsService.getDateString(creationDate);
     this.duration = UnitsService.getTimeString(duration);
     this.description = description;
   }

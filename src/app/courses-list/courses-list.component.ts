@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CoursesListItem } from './models/courses-list-item.model';
+import { CoursesListItemModel } from './models/courses-list-item.model';
 import { CoursesService } from './services/courses.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { CoursesService } from './services/courses.service';
   styleUrls: ['./courses-list.component.css']
 })
 export class CoursesListComponent implements OnInit {
-  public coursesItems: CoursesListItem[] = [];
+  public coursesItems: CoursesListItemModel[] = [];
 
 
   constructor(private coursesService: CoursesService) { }
