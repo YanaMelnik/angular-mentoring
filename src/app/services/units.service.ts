@@ -9,7 +9,7 @@ export class UnitsService {
   constructor() {
   }
 
-  static getTimeString(time: string): string {
+  static getTimeString(time: number): string {
     const oneHour = 60;
     const minutes = +time % oneHour;
     let hours;
