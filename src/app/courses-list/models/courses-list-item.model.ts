@@ -1,4 +1,4 @@
-import { UnitsService } from '../../services/units.service';
+import { getDateString, getTimeString } from '../../units.utils';
 
 export interface CoursesListItemModel {
   id: number;
@@ -22,11 +22,14 @@ export class CoursesListItem implements CoursesListItemModel {
     duration: number,
     description: string
   ) {
-    this.id = id;
-    this.title = title;
-    this.creationDate = UnitsService.getDateString(creationDate);
-    this.duration = UnitsService.getTimeString(duration);
-    this.description = description;
+
+    Object.assign(this, {
+      id,
+      title,
+      description,
+      creationDate: getDateString(creationDate),
+      duration: getTimeString(duration)
+    });
   }
 }
 
