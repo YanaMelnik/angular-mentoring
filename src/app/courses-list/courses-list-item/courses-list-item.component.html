@@ -6,7 +6,8 @@
     <div class="col-2">
       <div class="btn-group-vertical" role="group" aria-label="Basic example">
         <button class="btn btn-success">Edit</button>
-        <button class="btn btn-danger">Delete</button>
+        <button class="btn btn-danger"
+          (click)="delete(coursesItem.id)">Delete</button>
       </div>
     </div>
     <div class="col-10">{{coursesItem.description}}</div>
