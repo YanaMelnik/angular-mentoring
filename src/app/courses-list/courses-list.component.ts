@@ -1,14 +1,4 @@
-import {
-  AfterContentChecked,
-  AfterContentInit,
-  AfterViewChecked,
-  AfterViewInit,
-  Component,
-  DoCheck,
-  OnChanges,
-  OnDestroy,
-  OnInit
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CoursesListItemModel } from './models/courses-list-item.model';
 import { CoursesService } from './services/courses.service';
 
@@ -17,7 +7,7 @@ import { CoursesService } from './services/courses.service';
   templateUrl: './courses-list.component.html',
   styleUrls: ['./courses-list.component.css']
 })
-export class CoursesListComponent implements OnInit, OnChanges, DoCheck, AfterContentInit, AfterContentChecked, AfterViewInit, AfterViewChecked, OnDestroy {
+export class CoursesListComponent implements OnInit {
   public coursesItems: CoursesListItemModel[];
 
 
@@ -26,36 +16,7 @@ export class CoursesListComponent implements OnInit, OnChanges, DoCheck, AfterCo
   }
 
   ngOnInit() {
-    console.log('On init');
     this.coursesItems = this.coursesService.getCoursesItems();
-  }
-
-  ngOnChanges() {
-    console.log('On Changes');
-  }
-
-  ngDoCheck() {
-    console.log('Do Check');
-  }
-
-  ngAfterContentInit() {
-    console.log('After Content Init');
-  }
-
-  ngAfterContentChecked() {
-    console.log('After Content Checked');
-  }
-
-  ngAfterViewInit() {
-    console.log('After View Init');
-  }
-
-  ngAfterViewChecked() {
-    console.log('After View Checked');
-  }
-
-  ngOnDestroy() {
-    console.log('On Destroy');
   }
 
   onDeleteCourse(courseId: number) {
@@ -65,5 +26,4 @@ export class CoursesListComponent implements OnInit, OnChanges, DoCheck, AfterCo
   showMore() {
     console.log('Show more.');
   }
-
 }

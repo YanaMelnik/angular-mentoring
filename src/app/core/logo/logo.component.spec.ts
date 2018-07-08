@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LogoComponent } from './logo.component';
 
 describe('LogoComponent', () => {
-  let component: LogoComponent;
+  let sut: LogoComponent;
   let fixture: ComponentFixture<LogoComponent>;
 
   beforeEach(async(() => {
@@ -15,11 +15,11 @@ describe('LogoComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LogoComponent);
-    component = fixture.componentInstance;
+    sut = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(sut).toBeTruthy();
   });
 });

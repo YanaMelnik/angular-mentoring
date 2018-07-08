@@ -27,13 +27,13 @@ export class CoursesService {
         3,
         'Video Course #3',
         new Date(2018, 6, 14),
-        10,
+        99,
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
       new CoursesListItem(
         4,
         'Video Course #4',
         new Date(2018, 6, 16),
-        46,
+        70,
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
       new CoursesListItem(
         5,

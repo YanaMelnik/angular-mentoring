@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserEntityComponent } from './user-entity.component';
 
 describe('UserEntityComponent', () => {
-  let component: UserEntityComponent;
+  let sut: UserEntityComponent;
   let fixture: ComponentFixture<UserEntityComponent>;
 
   beforeEach(async(() => {
@@ -15,11 +15,11 @@ describe('UserEntityComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(UserEntityComponent);
-    component = fixture.componentInstance;
+    sut = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(sut).toBeTruthy();
   });
 });
