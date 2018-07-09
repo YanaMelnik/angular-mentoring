@@ -2,7 +2,7 @@
   <app-search-course
     (searchCourses)="onSearchCourse($event)">
   </app-search-course>
-  <app-courses-list-item *ngFor="let item of coursesItems | filterCourses : courseName"
+  <app-courses-list-item *ngFor="let item of coursesItems | filterCourses : courseName | orderByCourseDate"
     [coursesItem]="item"
     (deleteCourse)="onDeleteCourse($event)">
   </app-courses-list-item>

@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { HighlightNewCourseDirective } from './courses-list-item/highlight-new-course.directive';
 import { DurationModifyPipe } from './courses-list-item/duration-modify.pipe';
 import { FilterCoursesPipe } from './filter-courses.pipe';
+import { OrderByCourseDatePipe } from './order-by-course-date.pipe';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { FilterCoursesPipe } from './filter-courses.pipe';
     SearchCourseComponent,
     HighlightNewCourseDirective,
     DurationModifyPipe,
-    FilterCoursesPipe
+    FilterCoursesPipe,
+    OrderByCourseDatePipe
   ],
   exports: [CoursesListComponent, SearchCourseComponent]
 })

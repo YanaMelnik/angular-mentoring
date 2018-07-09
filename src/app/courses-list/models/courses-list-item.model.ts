@@ -1,5 +1,3 @@
-import { getDateString, getTimeString } from '../../units.utils';
-
 export interface CoursesListItemModel {
   id: number;
   title: string;

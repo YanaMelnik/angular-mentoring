@@ -5,6 +5,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CoursesService } from './services/courses.service';
 import { By } from '@angular/platform-browser';
 import { FilterCoursesPipe } from './filter-courses.pipe';
+import { OrderByCourseDatePipe } from './order-by-course-date.pipe';
 
 describe('CoursesListComponent', () => {
   let sut: CoursesListComponent;
@@ -15,7 +16,7 @@ describe('CoursesListComponent', () => {
     coursesService = {getCoursesItems: jasmine.createSpy('getCoursesItems')};
 
     TestBed.configureTestingModule({
-      declarations: [ CoursesListComponent, FilterCoursesPipe ],
+      declarations: [ CoursesListComponent, FilterCoursesPipe, OrderByCourseDatePipe ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       providers: [{provide: CoursesService, useValue: coursesService}]
     })
