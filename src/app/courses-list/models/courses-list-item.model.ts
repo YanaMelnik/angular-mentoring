@@ -3,22 +3,25 @@ import { getDateString, getTimeString } from '../../units.utils';
 export interface CoursesListItemModel {
   id: number;
   title: string;
-  creationDate: string;
-  duration: string;
+  creationDate: Date;
+  topRates: boolean;
+  duration: number;
   description: string;
 }
 
 export class CoursesListItem implements CoursesListItemModel {
   id: number;
   title: string;
-  creationDate: string;
-  duration: string;
+  creationDate: Date;
+  topRates: boolean;
+  duration: number;
   description: string;
 
   constructor (
     id: number,
     title: string,
     creationDate: Date,
+    topRates: boolean,
     duration: number,
     description: string
   ) {
@@ -26,9 +29,10 @@ export class CoursesListItem implements CoursesListItemModel {
     Object.assign(this, {
       id,
       title,
+      topRates,
       description,
-      creationDate: getDateString(creationDate),
-      duration: getTimeString(duration)
+      creationDate,
+      duration
     });
   }
 }

@@ -4,6 +4,8 @@ import { CoursesListItemComponent } from './courses-list-item.component';
 import { CoursesListItem, CoursesListItemModel } from '../models/courses-list-item.model';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { HighlightNewCourseDirective } from './highlight-new-course.directive';
+import { DurationModifyPipe } from './duration-modify.pipe';
 
 @Component({
   template: `
@@ -15,6 +17,7 @@ class TestHostComponent {
   public item: CoursesListItemModel = new CoursesListItem(1,
     'Video Course #1',
     new Date(2018, 5, 10),
+    true,
     28,
     'Lorem ipsum dolor sit amet, consectetur adipisicing elit.');
   public deletedItemId: number;
@@ -27,7 +30,7 @@ describe('CoursesListItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CoursesListItemComponent, TestHostComponent ]
+      declarations: [ CoursesListItemComponent, TestHostComponent, HighlightNewCourseDirective, DurationModifyPipe ]
     })
       .compileComponents();
   }));
@@ -44,6 +47,7 @@ describe('CoursesListItemComponent', () => {
       const deletedCourse = new CoursesListItem(1,
         'Video Course #1',
         new Date(2018, 5, 10),
+        true,
         28,
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit.');
 
