@@ -4,6 +4,7 @@ import { CoursesListComponent } from './courses-list.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CoursesService } from './services/courses.service';
 import { By } from '@angular/platform-browser';
+import { FilterCoursesPipe } from './filter-courses.pipe';
 
 describe('CoursesListComponent', () => {
   let sut: CoursesListComponent;
@@ -14,7 +15,7 @@ describe('CoursesListComponent', () => {
     coursesService = {getCoursesItems: jasmine.createSpy('getCoursesItems')};
 
     TestBed.configureTestingModule({
-      declarations: [ CoursesListComponent ],
+      declarations: [ CoursesListComponent, FilterCoursesPipe ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       providers: [{provide: CoursesService, useValue: coursesService}]
     })
@@ -46,6 +47,14 @@ describe('CoursesListComponent', () => {
         const courseId = 7;
         sut.onDeleteCourse(courseId);
         expect(console.log).toHaveBeenCalledWith(courseId);
+      });
+    });
+
+    describe('#onSearchCourse', () => {
+      it('should search course that match with search words when user click search button', () => {
+        const courseName = 'course';
+        sut.onSearchCourse(courseName);
+        expect(sut.courseName).toBe(courseName);
       });
     });
 

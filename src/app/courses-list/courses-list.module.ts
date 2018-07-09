@@ -6,6 +6,7 @@ import { SearchCourseComponent } from './search-course/search-course.component';
 import { FormsModule } from '@angular/forms';
 import { HighlightNewCourseDirective } from './courses-list-item/highlight-new-course.directive';
 import { DurationModifyPipe } from './courses-list-item/duration-modify.pipe';
+import { FilterCoursesPipe } from './filter-courses.pipe';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { DurationModifyPipe } from './courses-list-item/duration-modify.pipe';
     CoursesListItemComponent,
     SearchCourseComponent,
     HighlightNewCourseDirective,
-    DurationModifyPipe
+    DurationModifyPipe,
+    FilterCoursesPipe
   ],
   exports: [CoursesListComponent, SearchCourseComponent]
 })

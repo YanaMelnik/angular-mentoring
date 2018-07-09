@@ -9,7 +9,7 @@ import { CoursesService } from './services/courses.service';
 })
 export class CoursesListComponent implements OnInit {
   public coursesItems: CoursesListItemModel[];
-
+  public courseName: string;
 
   constructor(private coursesService: CoursesService) {
     this.coursesItems = [];
@@ -21,6 +21,10 @@ export class CoursesListComponent implements OnInit {
 
   onDeleteCourse(courseId: number) {
     console.log(courseId);
+  }
+
+  onSearchCourse(courseName: string) {
+    this.courseName = courseName;
   }
 
   showMore() {
