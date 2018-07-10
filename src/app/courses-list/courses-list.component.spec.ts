@@ -11,17 +11,24 @@ describe('CoursesListComponent', () => {
   let sut: CoursesListComponent;
   let fixture: ComponentFixture<CoursesListComponent>;
   let coursesService: Partial<CoursesService>;
+  let filterCoursesPipe: Partial<FilterCoursesPipe>; // I'm not sure
 
   beforeEach(async(() => {
     coursesService = {getCoursesItems: jasmine.createSpy('getCoursesItems')};
+    // filterCoursesPipe = new FilterCoursesPipe(); // I'm not sure too
+    filterCoursesPipe = {transform: jasmine.createSpy('transform')};
+    // In all of this case component test crushed
 
     TestBed.configureTestingModule({
       declarations: [ CoursesListComponent, FilterCoursesPipe, OrderByCourseDatePipe ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-      providers: [{provide: CoursesService, useValue: coursesService}]
+      providers: [{provide: CoursesService, useValue: coursesService},
+        {provide: FilterCoursesPipe, useValue: filterCoursesPipe}]
     })
     .compileComponents();
   }));
+
+  // and again I'm not sure (providers) but i have not example what to do when I use pipe in component
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CoursesListComponent);
