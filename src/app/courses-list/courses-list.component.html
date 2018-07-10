@@ -10,7 +10,9 @@
     (click)="showMore()">
       Load More
   </button>
-  <div class="alert alert-secondary" *ngIf="!coursesItems">
+  <div class="alert alert-secondary" *ngIf="(coursesItems | filterCourses : courseName).length === 0">>
     NO DATA. FEEL FREE TO ADD NEW COURSE.
   </div>
 </div>
+
+<!--TODO: Can't understand why test in component crushed when I use pipe like this (example last div)-->
