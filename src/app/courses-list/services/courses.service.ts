@@ -6,12 +6,13 @@ import { CoursesListItem } from '../models/courses-list-item.model';
   providedIn: 'root'
 })
 export class CoursesService {
+  public coursesItemList: CoursesListItemModel[];
 
   constructor() {
   }
 
   public getCoursesItems(): CoursesListItemModel[] {
-    return [
+    this.coursesItemList = [
       new CoursesListItem(1,
         'Video Course #1',
         new Date(2018, 5, 10),
@@ -47,5 +48,43 @@ export class CoursesService {
         30,
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit.')
     ];
+    return this.coursesItemList;
+  }
+
+  public createCourse(obj: any): CoursesListItemModel {
+    const {id, title, creationDate, topRates, duration, description} = obj;
+    const newCourse = new CoursesListItem(
+      id,
+      title,
+      creationDate,
+      topRates,
+      duration,
+      description
+    );
+    this.coursesItemList.push(newCourse);
+    return newCourse;
+  }
+
+  public getCourseById(id: number): CoursesListItemModel | string {
+    const foundCourse = this.coursesItemList.find((elem) => {
+      return elem.id === id;
+    });
+    if (!foundCourse) {
+      throw new Error(`Sorry, we can not found course with id: ${id}.`);
+    }
+    return foundCourse;
+  }
+
+  public updateCoursesItem(): void {
+    console.log('Update course');
+  }
+
+  public removeCoursesItem(id: number): void {
+    const deleteCourseIndex: number = this.coursesItemList.findIndex((elem) => {
+      return elem.id === id;
+    });
+    if (deleteCourseIndex !== -1) {
+      this.coursesItemList.splice(deleteCourseIndex, 1);
+    }
   }
 }

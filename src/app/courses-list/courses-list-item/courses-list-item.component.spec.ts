@@ -26,18 +26,20 @@ describe('CoursesListItemComponent', () => {
   });
 
   describe('#delete', () => {
-    it('should delete course when user press delete button', () => {
+    beforeEach(() => {
       spyOn(sut.deleteCourse, 'emit');
-      sut.coursesItem = new CoursesListItem(1,
-        'Video Course #1',
-        new Date(2018, 5, 10),
-        true,
-        28,
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit.');
+    });
 
+    it('should delete course when user press delete button', () => {
+      spyOn(window, 'confirm').and.returnValue(true);
       sut.delete();
-
       expect(sut.deleteCourse.emit).toHaveBeenCalledWith(sut.coursesItem.id);
+    });
+
+    it('should not delete course when user press delete button but not agree in confirm window', () => {
+      spyOn(window, 'confirm').and.returnValue(false);
+      sut.delete();
+      expect(sut.deleteCourse.emit).not.toHaveBeenCalled();
     });
   });
 });

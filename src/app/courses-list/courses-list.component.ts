@@ -22,7 +22,7 @@ export class CoursesListComponent implements OnInit {
   }
 
   onDeleteCourse(courseId: number) {
-    console.log(courseId);
+    this.coursesService.removeCoursesItem(courseId);
   }
 
   onSearchCourse(courseName: string) {

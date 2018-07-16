@@ -11,7 +11,10 @@ export class CoursesListItemComponent implements OnInit {
   @Output() public deleteCourse = new EventEmitter<number>();
 
   delete() {
-    this.deleteCourse.emit(this.coursesItem.id);
+    const needToDel = window.confirm('Are you really want to delete this course?');
+    if (needToDel) {
+      this.deleteCourse.emit(this.coursesItem.id);
+    }
   }
 
   constructor() { }

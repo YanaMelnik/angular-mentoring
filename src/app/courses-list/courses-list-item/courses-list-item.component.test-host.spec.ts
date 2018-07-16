@@ -44,6 +44,7 @@ describe('CoursesListItemComponent', () => {
 
   describe('#delete', () => {
     it('should delete course when user press delete button', () => {
+      spyOn(window, 'confirm').and.returnValue(true);
       const deletedCourse = new CoursesListItem(1,
         'Video Course #1',
         new Date(2018, 5, 10),

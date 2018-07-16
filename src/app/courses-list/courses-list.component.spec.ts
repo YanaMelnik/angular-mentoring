@@ -70,10 +70,12 @@ describe('CoursesListComponent', () => {
 
     describe('#onDeleteCourse', () => {
       it('should delete course item when user click delete button', () => {
+        spyOn(window, 'confirm').and.returnValue(true);
+        spyOn(coursesService, 'removeCoursesItem');
         const courseId = 7;
         const button = fixture.debugElement.query(By.css('.btn-course_delete'));
         button.triggerEventHandler('click', null);
-        expect(console.log).toHaveBeenCalledWith(courseId);
+        expect(coursesService.removeCoursesItem).toHaveBeenCalledWith(courseId);
       });
     });
   });

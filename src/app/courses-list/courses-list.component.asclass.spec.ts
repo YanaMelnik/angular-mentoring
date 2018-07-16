@@ -38,8 +38,10 @@ describe('CoursesListComponent', () => {
 
   describe('#onDeleteCourse', () => {
     it('should delete course item when user click delete button', () => {
+      spyOn(window, 'confirm').and.returnValue(true);
+      spyOn(coursesService, 'removeCoursesItem');
       sut.onDeleteCourse(courseItemTest.id);
-      expect(console.log).toHaveBeenCalledWith(7);
+      expect(coursesService.removeCoursesItem).toHaveBeenCalledWith(7);
     });
   });
 
