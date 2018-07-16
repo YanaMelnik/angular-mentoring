@@ -1,10 +1,13 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { AuthServiceService } from './core/services/auth-service.service';
 
 describe('AppComponent', () => {
   let sut: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
+  const authService: AuthServiceService = new AuthServiceService();
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -12,6 +15,9 @@ describe('AppComponent', () => {
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA
+      ],
+      providers: [
+        { provide: AuthServiceService, useValue: authService }
       ]
     }).compileComponents();
   }));
@@ -23,4 +29,16 @@ describe('AppComponent', () => {
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
+
+  describe('#isAuthenticated', () => {
+    it('should return false authentication flag if user is not logged', () => {
+      spyOn(authService, 'isAuthenticated').and.returnValue(false);
+      expect(sut.isAuthenticated()).toBe(false);
+    });
+
+    it('should return true authentication flag if user is not logged', () => {
+      spyOn(authService, 'isAuthenticated').and.returnValue(true);
+      expect(sut.isAuthenticated()).toBe(true);
+    });
+  });
 });

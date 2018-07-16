@@ -5,12 +5,15 @@ import { FooterComponent } from './footer/footer.component';
 import { LogoComponent } from './logo/logo.component';
 import { UserEntityComponent } from './header/user-entity/user-entity.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
+import { LoginComponent } from './login/login.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
-  declarations: [HeaderComponent, FooterComponent, LogoComponent, UserEntityComponent, BreadcrumbsComponent],
-  exports: [HeaderComponent, FooterComponent, LogoComponent, UserEntityComponent, BreadcrumbsComponent]
+  declarations: [HeaderComponent, FooterComponent, LogoComponent, UserEntityComponent, BreadcrumbsComponent, LoginComponent],
+  exports: [HeaderComponent, FooterComponent, LogoComponent, UserEntityComponent, BreadcrumbsComponent, LoginComponent]
 })
 export class CoreModule { }

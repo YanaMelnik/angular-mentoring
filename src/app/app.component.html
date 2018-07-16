@@ -1,6 +1,9 @@
 <app-header></app-header>
-<app-breadcrumbs></app-breadcrumbs>
-<div class="container">
-  <app-courses-list></app-courses-list>
+<app-login *ngIf="!isAuthenticated()"></app-login>
+<div *ngIf="isAuthenticated()">
+  <app-breadcrumbs></app-breadcrumbs>
+  <div class="container">
+    <app-courses-list></app-courses-list>
+  </div>
 </div>
 <app-footer></app-footer>
