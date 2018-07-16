@@ -11,9 +11,9 @@ import { By } from '@angular/platform-browser';
       <div [appHighlightNewCourse]="dateOneMonthAgo">No Highlight</div>`
 })
 class TestHostComponent {
-  todayYear = + new Date().getFullYear();
-  todayMonth = + new Date().getMonth();
-  todayDay = + new Date().getDate();
+  todayYear = new Date().getFullYear();
+  todayMonth = new Date().getMonth();
+  todayDay = new Date().getDate();
 
   dateToday = new Date().toString();
   dateOneWeekAgo = new Date(this.todayYear, this.todayMonth, (this.todayDay - 7)).toString();

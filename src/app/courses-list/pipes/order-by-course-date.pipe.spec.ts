@@ -1,5 +1,7 @@
 import { OrderByCourseDatePipe } from './order-by-course-date.pipe';
-import { CoursesListItem } from './models/courses-list-item.model';
+import { CoursesListItem } from '../models/courses-list-item.model';
+import { UtilsService } from '../../utils/utils.service';
+import { CoursesService } from '../services/courses.service';
 
 describe('OrderByCourseDatePipe', () => {
   const allCourses = [
@@ -18,7 +20,12 @@ describe('OrderByCourseDatePipe', () => {
       1,
       'Example')
   ];
-  const pipe = new OrderByCourseDatePipe();
+  const utilsService: UtilsService = new UtilsService();
+  const pipe = new OrderByCourseDatePipe(utilsService);
+
+  beforeEach(() => {
+    spyOn(utilsService, 'parseDateString').and.returnValue('1234567');
+  });
 
   it('create an instance', () => {
     expect(pipe).toBeTruthy();
@@ -30,6 +37,11 @@ describe('OrderByCourseDatePipe', () => {
   });
 
   it('should sort element if user have courses by date asceding', () => {
+    pipe.transform(allCourses);
+    expect(utilsService.parseDateString).toHaveBeenCalledTimes(2);
+  });
+
+  it('should return array with sorting by date asceding', () => {
     expect(pipe.transform(allCourses)).toEqual([allCourses[0], allCourses[1]]);
   });
 });

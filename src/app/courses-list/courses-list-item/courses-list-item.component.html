@@ -3,7 +3,7 @@
     <div class="col-6">{{coursesItem.title | uppercase}}
       <i class="material-icons"
         *ngIf="coursesItem.topRates"
-        [ngClass]="{'text-warning': coursesItem.topRates}">
+        [class.text-warning] = "coursesItem.topRates">
         star_rate
       </i>
     </div>

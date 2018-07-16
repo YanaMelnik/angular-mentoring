@@ -11,9 +11,7 @@ export class HighlightNewCourseDirective implements OnInit {
   }
 
   private highlight(color: string): void {
-    this.render.setStyle(this.el.nativeElement, 'border-color', color);
-    this.render.setStyle(this.el.nativeElement, 'border-width', '2px');
-    this.render.setStyle(this.el.nativeElement, 'border-style', 'solid');
+    this.render.setStyle(this.el.nativeElement, 'border', `2px solid ${color}`);
   }
 
   ngOnInit(): void {

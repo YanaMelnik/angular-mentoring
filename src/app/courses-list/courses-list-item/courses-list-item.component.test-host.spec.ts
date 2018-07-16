@@ -4,8 +4,8 @@ import { CoursesListItemComponent } from './courses-list-item.component';
 import { CoursesListItem, CoursesListItemModel } from '../models/courses-list-item.model';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { HighlightNewCourseDirective } from './highlight-new-course.directive';
-import { DurationModifyPipe } from './duration-modify.pipe';
+import { HighlightNewCourseDirective } from './directives/highlight-new-course.directive';
+import { DurationModifyPipe } from './pipes/duration-modify.pipe';
 
 @Component({
   template: `

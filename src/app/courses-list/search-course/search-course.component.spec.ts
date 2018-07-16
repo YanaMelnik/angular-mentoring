@@ -8,12 +8,12 @@ import { Component } from '@angular/core';
 @Component({
   template: `
     <app-search-course
-      [(searchCourse)] = searchCourse
+      [(searchCriteria)] = searchCriteria
       (searchCourses)="onSearchCourse($event)">
     </app-search-course>`
 })
 class TestHostComponent {
-  public searchCourse = 'video';
+  public searchCriteria = 'video';
   public searchCourses: string;
   public onSearchCourse(courseName: string) { this.searchCourses = courseName; }
 }
@@ -38,7 +38,7 @@ describe('SearchCourseComponent', () => {
     fixture.detectChanges();
   });
 
-  describe('#searchCourse', () => {
+  describe('#searchCriteria', () => {
     it('should search courses when user click search button', () => {
       const searchName = 'video';
       const searchButton = fixture.debugElement.query(By.css('.btn-course_search'));

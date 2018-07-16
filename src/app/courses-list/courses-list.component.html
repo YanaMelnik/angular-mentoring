@@ -10,7 +10,7 @@
     (click)="showMore()">
       Load More
   </button>
-  <div class="alert alert-secondary" *ngIf="!coursesItems">
+  <div class="alert alert-secondary" *ngIf="isShowNoDataMsg()">
     NO DATA. FEEL FREE TO ADD NEW COURSE.
   </div>
 </div>

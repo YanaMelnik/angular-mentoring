@@ -1,5 +1,5 @@
 import { FilterCoursesPipe } from './filter-courses.pipe';
-import { CoursesListItem } from './models/courses-list-item.model';
+import { CoursesListItem } from '../models/courses-list-item.model';
 
 describe('FilterCoursesPipe', () => {
   const allCourses = [

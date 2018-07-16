@@ -1,24 +1,47 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CoursesListComponent } from './courses-list.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CoursesService } from './services/courses.service';
 import { By } from '@angular/platform-browser';
-import { FilterCoursesPipe } from './filter-courses.pipe';
-import { OrderByCourseDatePipe } from './order-by-course-date.pipe';
+import { FilterCoursesPipe } from './pipes/filter-courses.pipe';
+import { OrderByCourseDatePipe } from './pipes/order-by-course-date.pipe';
+import { CoursesListItem } from './models/courses-list-item.model';
+import { DurationModifyPipe } from './courses-list-item/pipes/duration-modify.pipe';
+import { HighlightNewCourseDirective } from './courses-list-item/directives/highlight-new-course.directive';
+import { CoursesListItemComponent } from './courses-list-item/courses-list-item.component';
 
 describe('CoursesListComponent', () => {
   let sut: CoursesListComponent;
   let fixture: ComponentFixture<CoursesListComponent>;
-  let coursesService: Partial<CoursesService>;
+  const coursesService: CoursesService = new CoursesService();
+  let filterCoursesPipe: Partial<FilterCoursesPipe>;
+  let courseItemTest: CoursesListItem;
 
   beforeEach(async(() => {
-    coursesService = {getCoursesItems: jasmine.createSpy('getCoursesItems')};
+    courseItemTest =  new CoursesListItem(7,
+      'Video Course #1',
+      new Date(2018, 5, 10),
+      true,
+      28,
+      'Lorem ipsum dolor sit amet, consectetur adipisicing elit.');
+    spyOn(coursesService, 'getCoursesItems').and.returnValue([courseItemTest]);
+
+    filterCoursesPipe = {transform: jasmine.createSpy('transform')};
 
     TestBed.configureTestingModule({
-      declarations: [ CoursesListComponent, FilterCoursesPipe, OrderByCourseDatePipe ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-      providers: [{provide: CoursesService, useValue: coursesService}]
+      declarations: [ CoursesListComponent,
+        FilterCoursesPipe,
+        OrderByCourseDatePipe,
+        CoursesListItemComponent,
+        HighlightNewCourseDirective,
+        DurationModifyPipe
+      ],
+      schemas: [ NO_ERRORS_SCHEMA ],
+      providers: [
+          {provide: CoursesService, useValue: coursesService},
+          {provide: FilterCoursesPipe, useValue: filterCoursesPipe}
+        ]
     })
     .compileComponents();
   }));
@@ -35,38 +58,6 @@ describe('CoursesListComponent', () => {
     expect(sut).toBeTruthy();
   });
 
-  describe('test as a class', () => {
-    describe('#showMore', () => {
-      it('should show more courses when user click showMore button', () => {
-        sut.showMore();
-        expect(console.log).toHaveBeenCalledWith('Show more.');
-      });
-    });
-
-    describe('#onDeleteCourse', () => {
-      it('should delete course item when user click delete button', () => {
-        const courseId = 7;
-        sut.onDeleteCourse(courseId);
-        expect(console.log).toHaveBeenCalledWith(courseId);
-      });
-    });
-
-    describe('#onSearchCourse', () => {
-      it('should search course that match with search words when user click search button', () => {
-        const courseName = 'course';
-        sut.onSearchCourse(courseName);
-        expect(sut.courseName).toBe(courseName);
-      });
-    });
-
-    describe('#ngOnInit', () => {
-      it('should set courses item from server on init', () => {
-        sut.ngOnInit();
-        expect(coursesService.getCoursesItems).toHaveBeenCalledWith();
-      });
-    });
-  });
-
   describe('stand alone testing', () => {
     describe('#showMore', () => {
       it('should show more courses when user click showMore button', () => {
@@ -77,14 +68,13 @@ describe('CoursesListComponent', () => {
       });
     });
 
-    // TODO: I can't do it like this because I didn't render child component with btn class?
-    // describe('#onDeleteCourse', () => {
-    //   it('should delete course item when user click delete button', () => {
-    //     const courseId = 7;
-    //     const button = fixture.debugElement.query(By.css('.btn-course_delete'));
-    //     button.triggerEventHandler('click', null);
-    //     expect(console.log).toHaveBeenCalledWith(courseId);
-    //   });
-    // });
+    describe('#onDeleteCourse', () => {
+      it('should delete course item when user click delete button', () => {
+        const courseId = 7;
+        const button = fixture.debugElement.query(By.css('.btn-course_delete'));
+        button.triggerEventHandler('click', null);
+        expect(console.log).toHaveBeenCalledWith(courseId);
+      });
+    });
   });
 });
