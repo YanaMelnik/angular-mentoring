@@ -1,4 +1,4 @@
-import { Injectable, ɵEMPTY_ARRAY } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { CoursesListItemModel } from '../models/courses-list-item.model';
 import { CoursesListItem } from '../models/courses-list-item.model';
 
@@ -67,10 +67,7 @@ export class CoursesService {
 
   public getCourseById(id: number): CoursesListItemModel {
     const foundCourse = this.coursesItemList.find(elem => elem.id === id);
-    if (!foundCourse) {
-      return null;
-    }
-    return foundCourse;
+    return foundCourse ? foundCourse : null;
   }
 
   public updateCoursesItem(): void {

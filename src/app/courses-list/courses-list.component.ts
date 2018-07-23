@@ -33,7 +33,7 @@ export class CoursesListComponent implements OnInit {
     console.log('Show more.');
   }
 
-  isCourseShow() {
+  isCourseShown() {
     return !(this.filterCoursePipe.transform(this.coursesItems, this.courseName).length === 0);
   }
 }

@@ -2,7 +2,7 @@
   <app-search-course
     (searchCourses)="onSearchCourse($event)">
   </app-search-course>
-  <div *ngIf="isCourseShow()">
+  <div *ngIf="isCourseShown()">
     <app-courses-list-item *ngFor="let item of coursesItems | filterCourses : courseName | orderByCourseDate"
                            [coursesItem]="item"
                            (deleteCourse)="onDeleteCourse($event)">
@@ -12,7 +12,7 @@
       Load More
     </button>
   </div>
-  <div class="alert alert-secondary" *ngIf="!isCourseShow()">
+  <div class="alert alert-secondary" *ngIf="!isCourseShown()">
     NO DATA. FEEL FREE TO ADD NEW COURSE.
   </div>
 </div>
