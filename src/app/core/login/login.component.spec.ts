@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login.component';
-import { AuthServiceService } from '../services/auth-service.service';
+import { AuthService } from '../services/auth.service';
 
 describe('LoginComponent', () => {
   let sut: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  const authService: AuthServiceService = new AuthServiceService();
+  const authService: AuthService = new AuthService();
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [FormsModule],
       declarations: [ LoginComponent ],
       providers: [
-          { provide: AuthServiceService, useValue: authService }
+          { provide: AuthService, useValue: authService }
         ]
     })
     .compileComponents();

@@ -1,21 +1,30 @@
 export interface UserEntityModel {
-  id: number;
+  // id: number;
   firstName: string;
   lastName: string;
+  login: string;
+  password: string;
+  token: string;
 }
 
 export class UserEntity implements UserEntityModel {
-  id: number;
   firstName: string;
   lastName: string;
+  login: string;
+  password: string;
+  token: string;
 
-  constructor (
-    id: number,
+  constructor(
     firstName: string,
-    lastName: string
+    lastName: string,
+    login: string,
+    password: string,
+    token: string
   ) {
-    this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
+    this.login = login;
+    this.password = password;
+    this.token = token;
   }
 }

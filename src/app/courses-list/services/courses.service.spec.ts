@@ -76,24 +76,24 @@ describe('CoursesService', () => {
   });
 
   describe('#removeCoursesItem', () => {
-    it('should remove courses from courses list if it is present there', () => {
+    it('should remove courses if it is present in courses list', () => {
      sut.removeCoursesItem(1);
      expect(sut.coursesItemList).toEqual([secoundCourse]);
     });
 
-    it('should not remove courses from courses list if it is not present there', () => {
+    it('should not remove courses if it is not present in courses list', () => {
      sut.removeCoursesItem(8);
      expect(sut.coursesItemList).toEqual([firstCourse, secoundCourse]);
     });
   });
 
   describe('#getCourseById', () => {
-    it('should get courses from courses list if it is present there', () => {
+    it('should get courses if it is present in courses list', () => {
      expect(sut.getCourseById(1)).toEqual(firstCourse);
     });
 
-    it('should not get courses from courses list if it is not present there', () => {
-      expect(function() {sut.getCourseById(8); }).toThrow(new Error('Sorry, we can not found course with id: 8.'));
+    it('should return null if required course is not present in courses list', () => {
+      expect(sut.getCourseById(8)).toBeNull();
     });
   });
 
@@ -132,13 +132,6 @@ describe('CoursesService', () => {
     it('should create course', () => {
       sut.createCourse(objCourse);
      expect(sut.coursesItemList[2]).toEqual(newCourse);
-    });
-  });
-
-  describe('#updateCoursesItem', () => {
-    it('should update course', () => {
-     sut.updateCoursesItem();
-     expect(console.log).toHaveBeenCalledWith('Update course');
     });
   });
 });

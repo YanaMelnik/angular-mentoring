@@ -30,7 +30,7 @@ describe('CoursesListComponent', () => {
   });
 
   describe('#showMore', () => {
-    it('should show more courses when user click showMore button', () => {
+    it('should show more courses when user click show more button', () => {
       sut.showMore();
       expect(console.log).toHaveBeenCalledWith('Show more.');
     });

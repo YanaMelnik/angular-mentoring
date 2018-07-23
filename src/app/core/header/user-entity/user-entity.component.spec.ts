@@ -1,18 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserEntityComponent } from './user-entity.component';
-import { AuthServiceService } from '../../services/auth-service.service';
+import { AuthService } from '../../services/auth.service';
 
 describe('UserEntityComponent', () => {
   let sut: UserEntityComponent;
   let fixture: ComponentFixture<UserEntityComponent>;
-  const authService: AuthServiceService = new AuthServiceService();
+  const authService: AuthService = new AuthService();
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ UserEntityComponent ],
       providers: [
-        { provide: AuthServiceService, useValue: authService }
+        { provide: AuthService, useValue: authService }
       ]
     })
     .compileComponents();

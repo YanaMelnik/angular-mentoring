@@ -60,7 +60,7 @@ describe('CoursesListComponent', () => {
 
   describe('stand alone testing', () => {
     describe('#showMore', () => {
-      it('should show more courses when user click showMore button', () => {
+      it('should show more courses when user click show more button', () => {
         const button = fixture.debugElement.query(By.css('.btn-course-list_more'));
         button.triggerEventHandler('click', null);
 

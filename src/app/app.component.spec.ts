@@ -1,12 +1,12 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { AuthServiceService } from './core/services/auth-service.service';
+import { AuthService } from './core/services/auth.service';
 
 describe('AppComponent', () => {
   let sut: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  const authService: AuthServiceService = new AuthServiceService();
+  const authService: AuthService = new AuthService();
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -17,7 +17,7 @@ describe('AppComponent', () => {
         CUSTOM_ELEMENTS_SCHEMA
       ],
       providers: [
-        { provide: AuthServiceService, useValue: authService }
+        { provide: AuthService, useValue: authService }
       ]
     }).compileComponents();
   }));

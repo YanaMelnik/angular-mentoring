@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
+import { UserEntityModel } from '../header/user-entity/user-entity.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthServiceService {
-  private loginBase: any = [   // TODO Can't understand how to create complicate type
+export class AuthService {
+  private loginBase: UserEntityModel[] = [
     {
+      firstName: 'Ivan',
+      lastName: 'Pupkin',
       login: 'admin',
       password: 'admin',
-      name: 'Ivan',
-      lastName: 'Pupkin',
       token: '1234567890'
     },
     {
+      firstName: 'Petro',
+      lastName: 'Supkin',
       login: 'root',
       password: 'root',
-      name: 'Petro',
-      lastName: 'Supkin',
       token: '7890123456'
     }
   ];
@@ -25,17 +26,12 @@ export class AuthServiceService {
   constructor() { }
 
   public login(login: string, password: string): void {
-    const result: Array<any> = this.loginBase.filter((elem) => {
+    const result: UserEntityModel[] = this.loginBase.filter((elem) => {
       return elem.login === login && elem.password === password;
-    });  // TODO Can't understand how to create so complicated type
+    });
 
     if (result.length !== 0) {
-      const loginInfo = {
-        login: result[0].login,
-        name: result[0].name,
-        lastName: result[0].lastName,
-        token: result[0].token
-      };
+      const {password, ...loginInfo} = result[0];
       this.userLoggedIn = true;
       localStorage.setItem('logInUser', JSON.stringify(loginInfo));
       return;

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthServiceService } from './core/services/auth-service.service';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +7,7 @@ import { AuthServiceService } from './core/services/auth-service.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private authService: AuthServiceService) { }
+  constructor(private authService: AuthService) { }
 
   public isAuthenticated(): boolean {
     return this.authService.isAuthenticated();
