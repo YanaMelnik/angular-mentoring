@@ -7,6 +7,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class SearchCourseComponent implements OnInit {
   @Output() public searchCourses = new EventEmitter<string>();
+  @Output() public addCourses = new EventEmitter();
 
   @Input() public searchCriteria: string;
 
@@ -19,4 +20,7 @@ export class SearchCourseComponent implements OnInit {
     this.searchCourses.emit(this.searchCriteria);
   }
 
+  addCourse() {
+    this.addCourses.emit();
+  }
 }

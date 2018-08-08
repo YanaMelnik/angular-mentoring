@@ -16,13 +16,15 @@ export class CoursesListItem implements CoursesListItemModel {
   description: string;
 
   constructor (
-    id: number,
-    title: string,
-    creationDate: Date,
-    topRates: boolean,
-    duration: number,
-    description: string
+    id?: number,
+    title?: string,
+    creationDate?: Date,
+    topRates: boolean = false,
+    duration?: number,
+    description?: string
   ) {
+    // const date = creationDate.getFullYear() + '-' + creationDate.getMonth() + '-' + creationDate.getDay();
+
 
     Object.assign(this, {
       id,

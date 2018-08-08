@@ -5,11 +5,16 @@ import { CoursesListItem } from '../models/courses-list-item.model';
 @Injectable({
   providedIn: 'root'
 })
+
 export class CoursesService {
   public coursesItemList: CoursesListItemModel[];
 
   constructor() {
   }
+
+  coursesListPromise = Promise.resolve(this.coursesItemList
+    ? this.coursesItemList
+    : this.getCoursesItems());
 
   public getCoursesItems(): CoursesListItemModel[] {
     this.coursesItemList = [
@@ -52,27 +57,42 @@ export class CoursesService {
   }
 
   public createCourse(obj: any): CoursesListItemModel {
-    const {id, title, creationDate, topRates, duration, description} = obj;
+    const {id = 8, title, date, creationDate, topRates, duration, description} = obj;
     const newCourse = new CoursesListItem(
       id,
       title,
-      creationDate,
+      date || creationDate,
       topRates,
       duration,
       description
     );
-    this.coursesItemList.push(newCourse);
+    // this.coursesItemList.push(newCourse);
     return newCourse;
   }
 
-  public getCourseById(id: number): CoursesListItemModel {
-    const foundCourse = this.coursesItemList.find(elem => elem.id === id);
-    return foundCourse ? foundCourse : null;
+  public addCourse(newCourse: CoursesListItemModel) {
+    this.coursesItemList.push(newCourse);
   }
 
-  public updateCoursesItem(): void {
-    console.log('Update course');
+  getCourses(): Promise<CoursesListItemModel[]> {
+    return this.coursesListPromise;
   }
+
+  public getCourseById(id: number | string): Promise<CoursesListItemModel> {
+    return this.getCourses()
+      .then(courses => courses.find(elem => elem.id === +id))
+      .catch(() => Promise.reject('Error in getCourseById method'));
+  }
+
+  public updateCoursesItem(course: CoursesListItemModel): void {
+    const editCourseIndex: number = this.coursesItemList.findIndex((elem) => {
+      return elem.id === course.id;
+    });
+    if (editCourseIndex !== -1) {
+      this.coursesItemList.splice(editCourseIndex, 1, course);
+    }
+  }
+
 
   public removeCoursesItem(id: number): void {
     const deleteCourseIndex: number = this.coursesItemList.findIndex((elem) => {
@@ -82,4 +102,13 @@ export class CoursesService {
       this.coursesItemList.splice(deleteCourseIndex, 1);
     }
   }
+
+  // public editCoursesItem(id: number): void {
+  //   const editCourseIndex: number = this.coursesItemList.findIndex((elem) => {
+  //     return elem.id === id;
+  //   });
+  //   if (editCourseIndex !== -1) {
+  //     console.log('edit course item');
+  //   }
+  // }
 }

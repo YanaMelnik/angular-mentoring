@@ -4,6 +4,15 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { CoursesListModule } from './courses-list/courses-list.module';
+import { Router } from '@angular/router';
+import { AppRoutingModule } from './app-routing.module';
+import { IsAuthenticatedGuard } from './guards/isAuthenticatedGuard';
+import { IsNotAuthenticatedGuard } from './guards/isNotAuthenticatedGuard';
+
+const APP_PROVIDERS = [
+  IsAuthenticatedGuard,
+  IsNotAuthenticatedGuard
+];
 
 @NgModule({
   declarations: [
@@ -12,9 +21,14 @@ import { CoursesListModule } from './courses-list/courses-list.module';
   imports: [
     BrowserModule,
     CoreModule,
-    CoursesListModule
+    CoursesListModule,
+    AppRoutingModule
   ],
-  providers: [],
+  providers: [APP_PROVIDERS],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(router: Router) {
+    console.log('Routes: ', JSON.stringify(router.config, undefined, 2));
+  }
+}

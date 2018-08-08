@@ -9,12 +9,14 @@ import { CoursesListItemModel } from '../models/courses-list-item.model';
 export class CoursesListItemComponent implements OnInit {
   @Input() public coursesItem: CoursesListItemModel;
   @Output() public deleteCourse = new EventEmitter<number>();
+  @Output() public editCourse = new EventEmitter<number>();
 
   delete() {
-    const needToDel = window.confirm('Are you really want to delete this course?');
-    if (needToDel) {
-      this.deleteCourse.emit(this.coursesItem.id);
-    }
+    this.deleteCourse.emit(this.coursesItem.id);
+  }
+
+  edit() {
+    this.editCourse.emit(this.coursesItem.id);
   }
 
   constructor() { }

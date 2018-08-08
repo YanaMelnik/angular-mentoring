@@ -12,4 +12,13 @@ export class AppComponent {
   public isAuthenticated(): boolean {
     return this.authService.isAuthenticated();
   }
+
+  onActivate($event) {
+    console.log('Activated Component', $event);
+  }
+
+  onDeactivate($event) {
+    console.log('Deactivated Component', $event);
+  }
+
 }

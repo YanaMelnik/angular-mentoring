@@ -11,9 +11,10 @@
     <div class="col-2">{{coursesItem.creationDate | date: 'dd.MM.yyyy'}}</div>
     <div class="col-2">
       <div class="btn-group-vertical" role="group" aria-label="Basic example">
-        <button class="btn btn-success">Edit</button>
+        <button class="btn btn-success"
+                (click)="edit()">Edit</button>
         <button class="btn btn-danger btn-course_delete"
-          (click)="delete(coursesItem.id)">Delete</button>
+          (click)="delete()">Delete</button>
       </div>
     </div>
     <div class="col-10">{{coursesItem.description}}</div>

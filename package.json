@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build-aot": "ng build --prod",
+    "start-aot": "ng serve --aot",
     "test": "ng test",
     "tdd": "ng test --single-run=false",
     "lint": "ng lint",
@@ -23,6 +25,8 @@
     "@angular/router": "^6.0.0",
     "bootstrap": "^4.1.1",
     "core-js": "^2.5.4",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.4",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
   },
