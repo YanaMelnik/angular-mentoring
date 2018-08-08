@@ -14,7 +14,9 @@
            minlength="3"
            formControlName="duration"/>
     <div class="input-group-append">
-      <span class="input-group-text course_duration_time-hours">1h 20m</span>
+      <span class="input-group-text course_duration_time-hours">
+        {{form.get('duration').value | durationModify}}
+      </span>
     </div>
 
     <span class="help-block"
