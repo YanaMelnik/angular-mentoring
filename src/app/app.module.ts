@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { IsAuthenticatedGuard } from './guards/isAuthenticatedGuard';
 import { IsNotAuthenticatedGuard } from './guards/isNotAuthenticatedGuard';
+import { DatePipe } from '@angular/common';
 
 const APP_PROVIDERS = [
   IsAuthenticatedGuard,
@@ -24,7 +25,7 @@ const APP_PROVIDERS = [
     CoursesListModule,
     AppRoutingModule
   ],
-  providers: [APP_PROVIDERS],
+  providers: [APP_PROVIDERS, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {

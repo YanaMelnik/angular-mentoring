@@ -4,6 +4,7 @@ import { CoursesListItem, CoursesListItemModel } from '../models/courses-list-it
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CoursesService } from '../services/courses.service';
 import { switchMap } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-course-add',
@@ -18,7 +19,8 @@ export class CourseAddComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private coursesService: CoursesService
+    private coursesService: CoursesService,
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit(): void {
@@ -64,7 +66,7 @@ export class CourseAddComponent implements OnInit {
           Validators.minLength(3)
         ]),
       date: new FormControl(
-        this.course.creationDate,
+        this.datePipe.transform(this.course.creationDate, 'yyyy-MM-dd'),
         [
           Validators.required
         ]),
