@@ -8,17 +8,26 @@ const routes: Routes = [
   {
     path: 'courses',
     component: CoursesListComponent,
-    canActivate: [IsAuthenticatedGuard]
-  },
-  {
-    path: 'courses/new',
-    component: CourseAddComponent,
-    canActivate: [IsAuthenticatedGuard]
-  },
-  {
-    path: 'courses/:id',
-    component: CourseAddComponent,
-    canActivate: [IsAuthenticatedGuard]
+    canActivate: [IsAuthenticatedGuard],
+    data: {
+      breadcrumb: 'Courses'
+    },
+    children: [
+      {
+        path: 'new',
+        component: CourseAddComponent,
+        data: {
+          breadcrumb: 'New'
+        }
+      },
+      {
+        path: ':id',
+        component: CourseAddComponent,
+        data: {
+          breadcrumb: 'Id'
+        }
+      }
+    ]
   }
 ];
 

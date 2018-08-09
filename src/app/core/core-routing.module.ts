@@ -12,7 +12,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    canActivate: [IsNotAuthenticatedGuard]
+    canActivate: [IsNotAuthenticatedGuard],
+    data: {
+      breadcrumb: 'Login'
+    }
   }
 ];
 

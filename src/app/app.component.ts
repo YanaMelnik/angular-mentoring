@@ -20,5 +20,4 @@ export class AppComponent {
   onDeactivate($event) {
     console.log('Deactivated Component', $event);
   }
-
 }

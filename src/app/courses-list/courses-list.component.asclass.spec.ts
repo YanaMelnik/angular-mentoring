@@ -2,17 +2,20 @@ import { CoursesListComponent } from './courses-list.component';
 import { CoursesService } from './services/courses.service';
 import { FilterCoursesPipe } from './pipes/filter-courses.pipe';
 import { CoursesListItem } from './models/courses-list-item.model';
+import { Router } from '@angular/router';
 
 describe('CoursesListComponent', () => {
   let sut: CoursesListComponent;
   let courseItemTest: CoursesListItem;
   let coursesService: CoursesService;
   let filterCoursesPipe: FilterCoursesPipe;
+  const router: Router;
 
   beforeEach(() => {
     coursesService = new CoursesService();
     filterCoursesPipe = new FilterCoursesPipe();
-    sut = new CoursesListComponent(coursesService, filterCoursesPipe);
+    // router = new Router();
+    sut = new CoursesListComponent(router, coursesService, filterCoursesPipe);
 
     spyOn(coursesService, 'getCoursesItems').and.returnValue([courseItemTest]);
     spyOn(filterCoursesPipe, 'transform');

@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { IsAuthenticatedGuard } from './guards/isAuthenticatedGuard';
 import { IsNotAuthenticatedGuard } from './guards/isNotAuthenticatedGuard';
 import { DatePipe } from '@angular/common';
+import { BreadcrumbsModule } from 'ng6-breadcrumbs';
 
 const APP_PROVIDERS = [
   IsAuthenticatedGuard,
@@ -23,7 +24,8 @@ const APP_PROVIDERS = [
     BrowserModule,
     CoreModule,
     CoursesListModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BreadcrumbsModule
   ],
   providers: [APP_PROVIDERS, DatePipe],
   bootstrap: [AppComponent]
