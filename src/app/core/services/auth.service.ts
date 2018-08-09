@@ -4,6 +4,7 @@ import { UserEntityModel } from '../header/user-entity/user-entity.model';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
   private loginBase: UserEntityModel[] = [
     {

@@ -34,7 +34,11 @@ import { CoursesListRoutingModule } from './courses-list-routing.module';
     DateComponent,
     MultiselectComponent
   ],
-  exports: [CoursesListComponent, SearchCourseComponent, CourseAddComponent]
+  exports: [
+    CoursesListComponent,
+    SearchCourseComponent,
+    CourseAddComponent
+  ]
 })
 export class CoursesListModule {
 }

@@ -36,7 +36,6 @@ export class CoursesListComponent implements OnInit {
   onEditCourse(courseId: number): void {
     const link = ['/courses', courseId];
     this.router.navigate(link);
-    // this.coursesService.editCoursesItem(courseId);
   }
 
   onSearchCourse(courseName: string) {

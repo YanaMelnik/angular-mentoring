@@ -12,10 +12,10 @@ export class IsNotAuthenticatedGuard implements CanActivate {
   }
 
   canActivate(): boolean {
-    const auth = this.authService.isAuthenticated();
-    if (auth) {
+    const isAuthenticated = this.authService.isAuthenticated();
+    if (isAuthenticated) {
       this.router.navigate(['/courses']);
     }
-    return !auth;
+    return !isAuthenticated;
   }
 }
