@@ -1,20 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CoursesListItem, CoursesListItemModel } from '../models/courses-list-item.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CoursesService } from '../services/courses.service';
 import { switchMap } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
+import { fieldHasError } from '../../common/utils/utils';
+import DATE_FORMAT from '../../common/constants/date-format';
+// import { ISubscription } from "rxjs/Subscription";
 
 @Component({
   selector: 'app-course-add',
-  templateUrl: './course-add.component.html',
-  styleUrls: ['./course-add.component.css']
+  templateUrl: './course-form.component.html',
+  styleUrls: ['./course-form.component.css']
 })
-export class CourseAddComponent implements OnInit {
+export class CourseFormComponent implements OnInit, OnDestroy {
   courseForm: FormGroup;
   course: CoursesListItemModel = new CoursesListItem();
   urlId: number;
+  private subscription;
 
   constructor(
     private router: Router,
@@ -32,11 +36,10 @@ export class CourseAddComponent implements OnInit {
       null,
       '');
 
-    this.route.paramMap
+    this.subscription = this.route.paramMap
       .pipe(
         switchMap((params: Params) => {
-          this.urlId = +params.get('id');
-          return this.coursesService.getCourseById(this.urlId);
+          return this.coursesService.getCourseById(+params.get('id'));
         }))
       .subscribe(
         course => {
@@ -49,6 +52,10 @@ export class CourseAddComponent implements OnInit {
       );
 
     this.createForm();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   private createForm() {
@@ -66,7 +73,7 @@ export class CourseAddComponent implements OnInit {
           Validators.minLength(3)
         ]),
       date: new FormControl(
-        this.datePipe.transform(this.course.creationDate, 'yyyy-MM-dd'),
+        this.datePipe.transform(this.course.creationDate, DATE_FORMAT.DATE_FIELD),
         [
           Validators.required
         ]),
@@ -80,15 +87,18 @@ export class CourseAddComponent implements OnInit {
         '',
         [
           Validators.required
-        ])
+        ]),
+      id: new FormControl(
+        this.course.id
+      )
     });
   }
 
   save() {
     const course = this.courseForm.getRawValue();
 
-    if (this.urlId) {
-      course.id = this.urlId;
+    if (course.id) {
+      // course.id = this.urlId;
       const newCourse = this.coursesService.createCourse(course);
       this.coursesService.updateCoursesItem(newCourse);
     } else {
@@ -103,5 +113,9 @@ export class CourseAddComponent implements OnInit {
   cancel(): void {
     console.log('Bye bye');
     this.router.navigate(['/courses']);
+  }
+
+  isFieldInvalid(formControl: AbstractControl): boolean {
+    return fieldHasError(formControl);
   }
 }

@@ -8,10 +8,10 @@ import { HighlightNewCourseDirective } from './courses-list-item/directives/high
 import { DurationModifyPipe } from './courses-list-item/pipes/duration-modify.pipe';
 import { FilterCoursesPipe } from './pipes/filter-courses.pipe';
 import { OrderByCourseDatePipe } from './pipes/order-by-course-date.pipe';
-import { CourseAddComponent } from './course-add/course-add.component';
-import { DurationComponent } from './course-add/duration/duration.component';
-import { DateComponent } from './course-add/date/date.component';
-import { MultiselectComponent } from './course-add/multiselect/multiselect.component';
+import { CourseFormComponent } from './course-form/course-form.component';
+import { DurationComponent } from './course-form/duration/duration.component';
+import { DateComponent } from './course-form/date/date.component';
+import { MultiselectComponent } from './course-form/multiselect/multiselect.component';
 import { CoursesListRoutingModule } from './courses-list-routing.module';
 
 @NgModule({
@@ -29,7 +29,7 @@ import { CoursesListRoutingModule } from './courses-list-routing.module';
     DurationModifyPipe,
     FilterCoursesPipe,
     OrderByCourseDatePipe,
-    CourseAddComponent,
+    CourseFormComponent,
     DurationComponent,
     DateComponent,
     MultiselectComponent
@@ -37,7 +37,7 @@ import { CoursesListRoutingModule } from './courses-list-routing.module';
   exports: [
     CoursesListComponent,
     SearchCourseComponent,
-    CourseAddComponent
+    CourseFormComponent
   ]
 })
 export class CoursesListModule {

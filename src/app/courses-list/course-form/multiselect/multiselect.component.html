@@ -1,0 +1,23 @@
+<div class="form-group"
+   [formGroup]="form"
+   [ngClass]="{'has-error': isFieldInvalid(form.get('authors'))}">
+    <label class="col-md-2 control-label"
+         for="course_authors">
+        Authors <sup>*</sup>Required
+    </label>
+    <div class="col-sm-6 px-0 input-group mb-3">
+        <input class="form-control"
+           id="course_authors"
+           type="text"
+           placeholder="Enter course authors. (only mock for now)"
+           required
+           formControlName="authors"/>
+
+        <span class="help-block"
+           *ngIf="isFieldInvalid(form.get('authors'))">
+            <span *ngIf="form.get('authors').hasError('required')">
+                Please enter course author.
+            </span>
+        </span>
+    </div>
+</div>

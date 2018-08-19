@@ -1,28 +1,36 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CoursesListComponent } from './courses-list.component';
-import { CourseAddComponent } from './course-add/course-add.component';
+import { CourseFormComponent } from './course-form/course-form.component';
 import { IsAuthenticatedGuard } from '../guards/isAuthenticatedGuard';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'courses',
+    pathMatch: 'full'
+  },
+  {
     path: 'courses',
-    component: CoursesListComponent,
     canActivate: [IsAuthenticatedGuard],
     data: {
       breadcrumb: 'Courses'
     },
     children: [
       {
+        path: '',
+        component: CoursesListComponent,
+      },
+      {
         path: 'new',
-        component: CourseAddComponent,
+        component: CourseFormComponent,
         data: {
           breadcrumb: 'New'
         }
       },
       {
         path: ':id',
-        component: CourseAddComponent,
+        component: CourseFormComponent,
         data: {
           breadcrumb: 'Id'
         }

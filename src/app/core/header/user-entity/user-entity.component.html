@@ -1,22 +1,20 @@
 <div class="btn-group dropdown">
-  <button type="button" class="btn btn-outline-primary dropdown-toggle"
-          id="dropdownMenu2"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-          *ngIf="!isAuthenticated()">
-    User Login
-  </button>
-  <div class="dropdown-menu">
-    <a class="dropdown-item" href="#">Login</a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="#">Register</a>
-  </div>
+    <button type="button" class="btn btn-outline-primary dropdown-toggle"
+       id="dropdownMenu2"
+       data-toggle="dropdown"
+       aria-haspopup="true"
+       aria-expanded="false"
+       *ngIf="!isAuthenticated()">
+        User Login
+    </button>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">Login</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Register</a>
+    </div>
 </div>
 <button type="button" class="btn btn-light"
-        (click)="logout()"
-        *ngIf="isAuthenticated()">
-  Log Out
+   (click)="logout()"
+   *ngIf="isAuthenticated()">
+    Log Out
 </button>
-
-

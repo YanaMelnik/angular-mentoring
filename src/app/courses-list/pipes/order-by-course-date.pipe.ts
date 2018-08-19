@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { CoursesListItemModel } from '../models/courses-list-item.model';
-import { parseDateString } from '../../utils/utils';
+import { parseDateString } from '../../common/utils/utils';
 
 @Pipe({
   name: 'orderByCourseDate'

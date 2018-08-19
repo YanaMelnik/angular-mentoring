@@ -1,6 +1,6 @@
 import { OrderByCourseDatePipe } from './order-by-course-date.pipe';
 import { CoursesListItem } from '../models/courses-list-item.model';
-import { parseDateString } from '../../utils/utils';
+import { parseDateString } from '../../common/utils/utils';
 
 describe('OrderByCourseDatePipe', () => {
   const allCourses = [

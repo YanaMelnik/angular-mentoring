@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
+import { fieldHasError } from '../../../common/utils/utils';
 
 @Component({
   selector: 'app-multiselect',
@@ -15,4 +16,7 @@ export class MultiselectComponent implements OnInit {
   ngOnInit() {
   }
 
+  isFieldInvalid(formControl: AbstractControl): boolean {
+    return fieldHasError(formControl);
+  }
 }

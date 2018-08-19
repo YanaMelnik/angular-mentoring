@@ -1,0 +1,81 @@
+<div class="container panel-body">
+    <form class="form-horizontal"
+       *ngIf="course"
+       (ngSubmit)=save()
+       [formGroup]="courseForm">
+        <div class="form-group"
+           [ngClass]="{'has-error': isFieldInvalid(courseForm.get('title'))}">
+            <label class="col-md-2 control-label"
+                   for="course_title">
+                Title <sup>*</sup>Required
+            </label>
+            <input class="form-control"
+               id="course_title"
+               type="text"
+               placeholder="Enter title"
+               required
+               minlength="3"
+               formControlName="title"/>
+            <span class="help-block"
+               *ngIf="isFieldInvalid(courseForm.get('title'))">
+                <span *ngIf="courseForm.get('title').hasError('required')">
+                    Please enter course title.
+                </span>
+                <span *ngIf="courseForm.get('title').hasError('minlength')">
+                    Course title must be longer then 3 characters.
+                </span>
+            </span>
+        </div>
+
+        <div class="form-group"
+           [ngClass]="{'has-error': isFieldInvalid(courseForm.get('description'))}">
+            <span class="col-md-2 control-label">
+                Description <sup>*</sup>Required
+            </span>
+            <textarea class="form-control"
+               type="text"
+               placeholder="Enter description"
+               required
+               minlength="3"
+               formControlName="description">
+            </textarea>
+            <span class="help-block"
+               *ngIf="isFieldInvalid(courseForm.get('description'))">
+                <span *ngIf="courseForm.get('description').hasError('required')">
+                    Please enter course description.
+                </span>
+                <span *ngIf="courseForm.get('description').hasError('minlength')">
+                    Course description must be longer then 3 characters.
+                </span>
+            </span>
+        </div>
+
+        <app-date
+           [form]="courseForm">
+        </app-date>
+
+        <app-duration
+           [form]="courseForm">
+        </app-duration>
+
+        <app-multiselect
+           [form]="courseForm">
+        </app-multiselect>
+
+        <div class="form-group">
+            <button class="btn btn-primary btn-group mr-2" role="button"
+               type="submit"
+               [disabled]="!courseForm.valid"
+               (click)="save()">
+                Save
+            </button>
+
+            <button class="btn btn-primary btn-group ml-2" role="button"
+               type="button"
+               routerLink="/courses"
+               (click)="cancel()">
+                Cancel
+            </button>
+        </div>
+    </form>
+</div>

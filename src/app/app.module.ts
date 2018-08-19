@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { IsAuthenticatedGuard } from './guards/isAuthenticatedGuard';
 import { IsNotAuthenticatedGuard } from './guards/isNotAuthenticatedGuard';
 import { DatePipe } from '@angular/common';
+import { LoginModule } from './login/login.module';
 
 const APP_PROVIDERS = [
   IsAuthenticatedGuard,
@@ -17,11 +18,12 @@ const APP_PROVIDERS = [
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     CoreModule,
+    LoginModule,
     CoursesListModule,
     AppRoutingModule
   ],
