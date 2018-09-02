@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../core/services/auth.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,9 +7,10 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   public username: string;
   public password: string;
+  private userLogInSubscription;
 
   constructor(
     private authService: AuthService,
@@ -20,12 +21,17 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    try {
-      this.authService.login(this.username, this.password);
-      this.router.navigate(['/courses']);
-    } catch (err) {
-      // обработка ошибки
-    }
+    this.userLogInSubscription = this.authService.login(this.username, this.password)
+      .subscribe(
+        (res: boolean) => {
+          res
+          ? this.router.navigate(['/courses'])
+          : console.log( new Error('Sorry, this user is not registered'));
+        }
+      );
   }
 
+  ngOnDestroy() {
+    this.userLogInSubscription.unsubscribe();
+  }
 }

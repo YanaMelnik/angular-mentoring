@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserEntityComponent } from './user-entity.component';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../services/auth.service';
 
 describe('UserEntityComponent', () => {
   let sut: UserEntityComponent;

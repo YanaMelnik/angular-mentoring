@@ -4,15 +4,17 @@
        (addCourses)="onAddingCourse($event)">
     </app-search-course>
     <div *ngIf="isCourseShown()">
-        <app-courses-list-item *ngFor="let item of coursesItems | filterCourses : courseName | orderByCourseDate"
+        <app-courses-list-item *ngFor="let item of coursesItems | orderByCourseDate"
            [coursesItem]="item"
            (deleteCourse)="onDeleteCourse($event)"
            (editCourse)="onEditCourse($event)">
         </app-courses-list-item>
-        <button class="btn btn-outline-secondary btn-lg btn-block btn-course-list_more"
-           (click)="showMore()">
-            Load More
-        </button>
+        <div *ngIf="showMoreCourse">
+            <button class="btn btn-outline-secondary btn-lg btn-block btn-course-list_more"
+               (click)="showMore()">
+                Load More
+            </button>
+        </div>
     </div>
     <div class="alert alert-secondary" *ngIf="!isCourseShown()">
         NO DATA. FEEL FREE TO ADD NEW COURSE.

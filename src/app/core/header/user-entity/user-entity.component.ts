@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,7 +7,8 @@ import { Router } from '@angular/router';
   templateUrl: './user-entity.component.html',
   styleUrls: ['./user-entity.component.css']
 })
-export class UserEntityComponent implements OnInit {
+export class UserEntityComponent implements OnInit, OnDestroy {
+  private userLogOutSubscription;
 
   constructor(
     private authService: AuthService,
@@ -18,11 +19,18 @@ export class UserEntityComponent implements OnInit {
   }
 
   logout(): void {
-    this.authService.logout();
-    this.router.navigate(['']);
+    this.userLogOutSubscription = this.authService.logout()
+      .subscribe(
+        () => {
+        this.router.navigate(['/login']);
+      });
   }
 
   public isAuthenticated(): boolean {
     return this.authService.isAuthenticated();
+  }
+
+  ngOnDestroy() {
+    this.userLogOutSubscription.unsubscribe();
   }
 }

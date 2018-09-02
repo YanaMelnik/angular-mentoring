@@ -1,7 +1,7 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { AuthService } from './core/services/auth.service';
+import { AuthService } from './services/auth.service';
 
 describe('AppComponent', () => {
   let sut: AppComponent;

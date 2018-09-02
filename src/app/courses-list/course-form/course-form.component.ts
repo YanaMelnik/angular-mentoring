@@ -7,7 +7,6 @@ import { switchMap } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 import { fieldHasError } from '../../common/utils/utils';
 import DATE_FORMAT from '../../common/constants/date-format';
-// import { ISubscription } from "rxjs/Subscription";
 
 @Component({
   selector: 'app-course-add',
@@ -17,8 +16,9 @@ import DATE_FORMAT from '../../common/constants/date-format';
 export class CourseFormComponent implements OnInit, OnDestroy {
   courseForm: FormGroup;
   course: CoursesListItemModel = new CoursesListItem();
-  urlId: number;
-  private subscription;
+  private createFormSubscription;
+  private updateCourseSubscription;
+  private addCourseSubscription;
 
   constructor(
     private router: Router,
@@ -36,7 +36,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
       null,
       '');
 
-    this.subscription = this.route.paramMap
+    this.createFormSubscription = this.route.paramMap
       .pipe(
         switchMap((params: Params) => {
           return this.coursesService.getCourseById(+params.get('id'));
@@ -54,10 +54,6 @@ export class CourseFormComponent implements OnInit, OnDestroy {
     this.createForm();
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
   private createForm() {
     this.courseForm = new FormGroup({
       title: new FormControl(
@@ -72,7 +68,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.minLength(3)
         ]),
-      date: new FormControl(
+      creationDate: new FormControl(
         this.datePipe.transform(this.course.creationDate, DATE_FORMAT.DATE_FIELD),
         [
           Validators.required
@@ -98,16 +94,20 @@ export class CourseFormComponent implements OnInit, OnDestroy {
     const course = this.courseForm.getRawValue();
 
     if (course.id) {
-      // course.id = this.urlId;
-      const newCourse = this.coursesService.createCourse(course);
-      this.coursesService.updateCoursesItem(newCourse);
+      this.updateCourseSubscription = this.coursesService.updateCoursesItem(course)
+        .subscribe(
+          () => {},
+          err => console.log(err)
+        );
     } else {
-      const newCourse = this.coursesService.createCourse(course);
-      this.coursesService.addCourse(newCourse);
+      this.addCourseSubscription = this.coursesService.addCourse(course)
+        .subscribe(
+          () => {},
+          err => console.log(err)
+        );
     }
 
     this.router.navigate(['/courses']);
-    console.log(this.courseForm);
   }
 
   cancel(): void {
@@ -117,5 +117,11 @@ export class CourseFormComponent implements OnInit, OnDestroy {
 
   isFieldInvalid(formControl: AbstractControl): boolean {
     return fieldHasError(formControl);
+  }
+
+  ngOnDestroy(): void {
+    this.createFormSubscription.unsubscribe();
+    this.updateCourseSubscription.unsubscribe();
+    this.addCourseSubscription.unsubscribe();
   }
 }

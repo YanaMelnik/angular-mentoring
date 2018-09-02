@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
-import { CoursesListItemModel } from '../models/courses-list-item.model';
-import { CoursesListItem } from '../models/courses-list-item.model';
+import { CoursesListItem, CoursesListItemModel } from '../models/courses-list-item.model';
+import { HttpClient } from '../../../../node_modules/@angular/common/http';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { PaginationListModel } from '../models/pagination-list.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,51 +12,15 @@ import { CoursesListItem } from '../models/courses-list-item.model';
 export class CoursesService {
   public coursesItemList: CoursesListItemModel[];
 
-  constructor() {
+  constructor(private http: HttpClient) {
   }
 
-  coursesListPromise = Promise.resolve(this.coursesItemList
-    ? this.coursesItemList
-    : this.getCoursesItems());
-
-  public getCoursesItems(): CoursesListItemModel[] {
-    this.coursesItemList = [
-      new CoursesListItem(1,
-        'Video Course #1',
-        new Date(2018, 5, 10),
-        true,
-        28,
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
-      new CoursesListItem(
-        2,
-        'Video Course #2',
-        new Date(2018, 6, 5),
-        true,
-        27,
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
-      new CoursesListItem(
-        3,
-        'Video Course #3',
-        new Date(2018, 6, 14),
-        false,
-        99,
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
-      new CoursesListItem(
-        4,
-        'Video Course #4',
-        new Date(2018, 6, 16),
-        true,
-        70,
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
-      new CoursesListItem(
-        5,
-        'Video Course #5',
-        new Date(2018, 7, 21),
-        false,
-        30,
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit.')
-    ];
-    return this.coursesItemList;
+  public getCoursesItems(countOnPage: number, pageNumber: number): Observable<PaginationListModel<CoursesListItemModel>> {
+    return this.http.get(`/api/courses?start=${pageNumber}&count=${countOnPage}`)
+      .pipe(
+        map(res => res as PaginationListModel<CoursesListItemModel>)
+      );
+    // TODO: If I understand correctly, I need to create new interface for all response (DTO) from BE?
   }
 
   public createCourse(obj: any): CoursesListItemModel {
@@ -66,16 +33,15 @@ export class CoursesService {
       duration,
       description
     );
-    // this.coursesItemList.push(newCourse);
     return newCourse;
   }
 
   public addCourse(newCourse: CoursesListItemModel) {
-    this.coursesItemList.push(newCourse);
+    return this.http.put('/api/course', {newCourse});
   }
 
   getCourses(): Promise<CoursesListItemModel[]> {
-    return this.coursesListPromise;
+    return Promise.resolve([]);
   }
 
   public getCourseById(id: number | string): Promise<CoursesListItemModel> {
@@ -84,31 +50,18 @@ export class CoursesService {
       .catch(() => Promise.reject('Error in getCourseById method'));
   }
 
-  public updateCoursesItem(course: CoursesListItemModel): void {
-    const editCourseIndex: number = this.coursesItemList.findIndex((elem) => {
-      return elem.id === course.id;
-    });
-    if (editCourseIndex !== -1) {
-      this.coursesItemList.splice(editCourseIndex, 1, course);
-    }
+  public updateCoursesItem(course: CoursesListItemModel): Observable<object>  {
+    return this.http.post('/api/course', {course});
   }
 
-
-  public removeCoursesItem(id: number): void {
-    const deleteCourseIndex: number = this.coursesItemList.findIndex((elem) => {
-      return elem.id === id;
-    });
-    if (deleteCourseIndex !== -1) {
-      this.coursesItemList.splice(deleteCourseIndex, 1);
-    }
+  public removeCoursesItem(id: number): Observable<object> {
+    return this.http.delete(`/api/course/${id}`);
   }
 
-  // public editCoursesItem(id: number): void {
-  //   const editCourseIndex: number = this.coursesItemList.findIndex((elem) => {
-  //     return elem.id === id;
-  //   });
-  //   if (editCourseIndex !== -1) {
-  //     console.log('edit course item');
-  //   }
-  // }
+  public searchCourseItem(text: string): Observable<object> {
+    return this.http.get(`/api/course/search?textFragment=${text}`)
+      .pipe(
+        map(res => res as Array<CoursesListItem>)
+      );
+  }
 }

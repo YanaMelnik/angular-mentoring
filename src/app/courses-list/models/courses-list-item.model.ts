@@ -23,9 +23,6 @@ export class CoursesListItem implements CoursesListItemModel {
     duration?: number,
     description?: string
   ) {
-    // const date = creationDate.getFullYear() + '-' + creationDate.getMonth() + '-' + creationDate.getDay();
-
-
     Object.assign(this, {
       id,
       title,

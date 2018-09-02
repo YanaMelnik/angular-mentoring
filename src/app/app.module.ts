@@ -10,6 +10,8 @@ import { IsAuthenticatedGuard } from './guards/isAuthenticatedGuard';
 import { IsNotAuthenticatedGuard } from './guards/isNotAuthenticatedGuard';
 import { DatePipe } from '@angular/common';
 import { LoginModule } from './login/login.module';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthorizationInterceptor } from './common/http/authorization.interceptor';
 
 const APP_PROVIDERS = [
   IsAuthenticatedGuard,
@@ -22,12 +24,21 @@ const APP_PROVIDERS = [
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     CoreModule,
     LoginModule,
     CoursesListModule,
     AppRoutingModule
   ],
-  providers: [APP_PROVIDERS, DatePipe],
+  providers: [
+    APP_PROVIDERS,
+    DatePipe,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthorizationInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
