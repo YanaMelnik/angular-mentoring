@@ -1,17 +1,8 @@
-<app-header></app-header>
-<!--<app-login *ngIf="!isAuthenticated()"></app-login>-->
-<!--<div *ngIf="isAuthenticated()">-->
-  <!--<app-breadcrumbs></app-breadcrumbs>-->
-  <!--<div class="container">-->
-    <!--<app-courses-list></app-courses-list>-->
-  <!--</div>-->
-<!--</div>-->
-<!--<app-course-form></app-course-form>-->
-
-<router-outlet
-   (activate)='onActivate($event)'
-   (deactivate)='onDeactivate($event)'>
-</router-outlet>
-<!-- Routed views go here -->
-
-<app-footer></app-footer>
+<app-loading-block>
+    <app-header></app-header>
+    <router-outlet
+       (activate)='onActivate($event)'
+       (deactivate)='onDeactivate($event)'>
+    </router-outlet>
+    <app-footer></app-footer>
+</app-loading-block>

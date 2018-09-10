@@ -59,7 +59,8 @@ export class CoursesService {
   }
 
   public searchCourseItem(text: string): Observable<object> {
-    return this.http.get(`/api/course/search?textFragment=${text}`)
+    console.log(text);
+    return this.http.get(`/api/course/search?textFragment=${encodeURIComponent(text)}`) // TODO #number do not enter in request
       .pipe(
         map(res => res as Array<CoursesListItem>)
       );

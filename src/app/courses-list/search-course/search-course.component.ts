@@ -17,6 +17,7 @@ export class SearchCourseComponent implements OnInit {
   }
 
   search() {
+    console.log('Ready');
     this.searchCourses.emit(this.searchCriteria);
   }
 

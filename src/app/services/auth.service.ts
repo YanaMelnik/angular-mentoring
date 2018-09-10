@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 import { tap, catchError, map } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
+import { UserInfoModel } from '../core/header/user-entity/user-entity.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ import { Observable, of } from 'rxjs';
 
 export class AuthService {
   public userLoggedIn = false;
+  public loginStatus = new Subject<boolean>();
 
   constructor(private userService: UserService) { }
 
@@ -16,6 +18,7 @@ export class AuthService {
     return this.userService.logIn(login, password)
       .pipe(
         tap((res: any) => localStorage.setItem('userToken', res.token)),
+        tap(() => this.loginStatus.next(true)),
         map((res) => true),
         catchError((err) => of(false))
       );
@@ -24,15 +27,21 @@ export class AuthService {
   public logout(): Observable<object> {
     const userToken = localStorage.getItem('userToken');
     localStorage.removeItem('userToken');
-    return this.userService.logOut(userToken);
+    return this.userService.logOut(userToken)
+      .pipe(
+        tap(() => this.loginStatus.next(false))
+      );
   }
 
-  public isAuthenticated(): boolean {
-    return !!localStorage.getItem('userToken');
+  public isAuthenticated(): Observable<boolean>  {
+    return of(!!localStorage.getItem('userToken'));
   }
 
-  public getUserInfo(): Observable<object>  {
-    // TODO: I'm created method but I don't know where I can use it
+  public getUserInfo(): Observable<UserInfoModel>  {
     return this.userService.getUserInfo();
+  }
+
+  public listenForLoginChanges(): Observable<boolean> {
+    return this.loginStatus.asObservable();
   }
 }

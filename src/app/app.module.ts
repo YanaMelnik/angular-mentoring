@@ -12,6 +12,8 @@ import { DatePipe } from '@angular/common';
 import { LoginModule } from './login/login.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthorizationInterceptor } from './common/http/authorization.interceptor';
+import { LoadingBlockComponent } from './common/loading-block/loading-block.component';
+import { OverlayInterceptor } from './common/loading-block/overlay.interceptor';
 
 const APP_PROVIDERS = [
   IsAuthenticatedGuard,
@@ -20,7 +22,8 @@ const APP_PROVIDERS = [
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoadingBlockComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +39,11 @@ const APP_PROVIDERS = [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthorizationInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: OverlayInterceptor,
       multi: true
     }
   ],

@@ -5,6 +5,12 @@ export interface UserEntityModel {
   password: string;
 }
 
+export interface UserInfoModel {
+  firstName: string;
+  lastName: string;
+  login: string;
+}
+
 export class UserEntity implements UserEntityModel {
   firstName: string;
   lastName: string;

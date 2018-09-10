@@ -120,8 +120,12 @@ export class CourseFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.createFormSubscription.unsubscribe();
-    this.updateCourseSubscription.unsubscribe();
-    this.addCourseSubscription.unsubscribe();
+    [
+      this.createFormSubscription,
+      this.updateCourseSubscription,
+      this.addCourseSubscription
+    ]
+      .filter(subscrip => !!subscrip)
+      .forEach(item => item.unsubscribe());
   }
 }

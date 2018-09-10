@@ -3,13 +3,15 @@ import { CoursesListItemModel } from './models/courses-list-item.model';
 import { CoursesService } from './services/courses.service';
 import { FilterCoursesPipe } from './pipes/filter-courses.pipe';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { filter, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-courses-list',
   templateUrl: './courses-list.component.html',
   styleUrls: ['./courses-list.component.css'],
   // changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ FilterCoursesPipe ]
+  providers: [FilterCoursesPipe]
 })
 export class CoursesListComponent implements OnInit, OnDestroy {
   public coursesItems: CoursesListItemModel[];
@@ -20,6 +22,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   private coursesItemsSubscription;
   private searchedCourseSubscription;
   private deletedCourseSubscription;
+  private searchInput = new Subject<string>();
 
   constructor(
     private router: Router,
@@ -30,18 +33,28 @@ export class CoursesListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getCoursesItems(this.countOnPage, this.pageNumber);
+    this.searchInput
+      .pipe(
+        filter(val => val.length === 0 || val.length >= 3),
+        debounceTime(1000),
+        distinctUntilChanged()
+      )
+      .subscribe((courseName) => {
+        console.log(courseName);
+        this.doSearchCourse(courseName.toString());
+      });
   }
 
   getCoursesItems(countOnPage: number, pageNumber: number) {
     this.coursesItemsSubscription = this.coursesService.getCoursesItems(countOnPage, pageNumber)
       .subscribe(
-      (res) => {
-        this.coursesItems = this.coursesItems.slice();
-        this.coursesItems.push(...res.items);
-        this.showMoreCourse = res.moreAvailable;
+        (res) => {
+          this.coursesItems = this.coursesItems.slice();
+          this.coursesItems.push(...res.items);
+          this.showMoreCourse = res.moreAvailable;
         }, // TODO: Can't understand - i change link but change detected didn't run
-      err => console.log('Can\'t retrieve courses', err)
-    );
+        err => console.log('Can\'t retrieve courses', err)
+      );
   }
 
   onDeleteCourse(courseId: number) {
@@ -69,10 +82,16 @@ export class CoursesListComponent implements OnInit, OnDestroy {
 
   onSearchCourse(courseName: string) {
     this.courseName = courseName;
+    this.searchInput.next(this.courseName);
+  }
 
+  private doSearchCourse(courseName: string) {
     this.searchedCourseSubscription = this.coursesService.searchCourseItem(courseName)
       .subscribe(
-        (res: any) => { this.coursesItems = res; },
+        (res: any) => {
+          console.log(res);
+          this.coursesItems = res;
+        },
         err => {
           console.log('Can\'t retrieve courses', err);
           this.coursesItems = [];
@@ -94,8 +113,12 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.coursesItemsSubscription.unsubscribe();
-    this.searchedCourseSubscription.unsubscribe();
-    this.deletedCourseSubscription.unsubscribe();
+    [
+      this.coursesItemsSubscription,
+      this.searchedCourseSubscription,
+      this.deletedCourseSubscription
+    ]
+      .filter(subscrip => !!subscrip)
+      .forEach(item => item.unsubscribe());
   }
 }

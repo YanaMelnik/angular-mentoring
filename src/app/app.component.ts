@@ -9,9 +9,9 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
   constructor(private authService: AuthService) { }
 
-  public isAuthenticated(): boolean {
-    return this.authService.isAuthenticated();
-  }
+  // public isAuthenticated(): boolean {
+  //   return this.authService.isAuthenticated();
+  // }
 
   onActivate($event) {
     console.log('Activated Component', $event);
