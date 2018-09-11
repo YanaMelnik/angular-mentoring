@@ -10,8 +10,6 @@ import { PaginationListModel } from '../models/pagination-list.model';
 })
 
 export class CoursesService {
-  public coursesItemList: CoursesListItemModel[];
-
   constructor(private http: HttpClient) {
   }
 
@@ -40,14 +38,11 @@ export class CoursesService {
     return this.http.put('/api/course', {newCourse});
   }
 
-  getCourses(): Promise<CoursesListItemModel[]> {
-    return Promise.resolve([]);
-  }
-
-  public getCourseById(id: number | string): Promise<CoursesListItemModel> {
-    return this.getCourses()
-      .then(courses => courses.find(elem => elem.id === +id))
-      .catch(() => Promise.reject('Error in getCourseById method'));
+  public getCourseById(courseId: number): Observable<CoursesListItemModel> {
+    return this.http.get(`/api/course/${courseId}`)
+      .pipe(
+        map(res => res as CoursesListItemModel)
+      );
   }
 
   public updateCoursesItem(course: CoursesListItemModel): Observable<object>  {
