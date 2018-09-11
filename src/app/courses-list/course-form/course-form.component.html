@@ -5,17 +5,11 @@
        [formGroup]="courseForm">
         <div class="form-group"
            [ngClass]="{'has-error': isFieldInvalid(courseForm.get('title'))}">
-            <label class="col-md-2 control-label"
+            <label class="control-label"
                    for="course_title">
                 Title <sup>*</sup>Required
             </label>
-            <input class="form-control"
-               id="course_title"
-               type="text"
-               placeholder="Enter title"
-               required
-               minlength="3"
-               formControlName="title"/>
+
             <span class="help-block"
                *ngIf="isFieldInvalid(courseForm.get('title'))">
                 <span *ngIf="courseForm.get('title').hasError('required')">
@@ -25,20 +19,21 @@
                     Course title must be longer then 3 characters.
                 </span>
             </span>
+
+            <input class="form-control"
+               id="course_title"
+               type="text"
+               placeholder="Enter title"
+               required
+               minlength="3"
+               formControlName="title"/>
         </div>
 
         <div class="form-group"
            [ngClass]="{'has-error': isFieldInvalid(courseForm.get('description'))}">
-            <span class="col-md-2 control-label">
+            <span class="control-label">
                 Description <sup>*</sup>Required
             </span>
-            <textarea class="form-control"
-               type="text"
-               placeholder="Enter description"
-               required
-               minlength="3"
-               formControlName="description">
-            </textarea>
             <span class="help-block"
                *ngIf="isFieldInvalid(courseForm.get('description'))">
                 <span *ngIf="courseForm.get('description').hasError('required')">
@@ -48,6 +43,13 @@
                     Course description must be longer then 3 characters.
                 </span>
             </span>
+            <textarea class="form-control"
+               type="text"
+               placeholder="Enter description"
+               required
+               minlength="3"
+               formControlName="description">
+            </textarea>
         </div>
 
         <app-date

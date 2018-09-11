@@ -60,13 +60,15 @@ export class CourseFormComponent implements OnInit, OnDestroy {
         this.course.title,
         [
           Validators.required,
-          Validators.minLength(3)
+          Validators.minLength(3),
+          Validators.maxLength(50)
         ]),
       description: new FormControl(
         this.course.description,
         [
           Validators.required,
-          Validators.minLength(3)
+          Validators.minLength(3),
+          Validators.maxLength(500)
         ]),
       creationDate: new FormControl(
         this.datePipe.transform(this.course.creationDate, DATE_FORMAT.DATE_FIELD),

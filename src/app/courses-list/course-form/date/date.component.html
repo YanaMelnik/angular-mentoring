@@ -1,10 +1,16 @@
 <div class="form-group"
    [formGroup]="form"
    [ngClass]="{'has-error': isFieldInvalid(form.get('creationDate'))}">
-    <label class="col-md-2 control-label"
+    <label class="control-label"
        for="course_creationDate">
         Date <sup>*</sup>Required
     </label>
+    <span class="help-block"
+         *ngIf="isFieldInvalid(form.get('creationDate'))">
+      <span *ngIf="form.get('creationDate').hasError('required')">
+        Please enter course date.
+      </span>
+    </span>
     <div class="col-sm-6 px-0">
         <input class="form-control"
            id="course_creationDate"
@@ -13,11 +19,5 @@
            required
            minlength="1"
            formControlName="creationDate"/>
-        <span class="help-block"
-           *ngIf="isFieldInvalid(form.get('creationDate'))">
-            <span *ngIf="form.get('creationDate').hasError('required')">
-                Please enter course date.
-            </span>
-          </span>
     </div>
 </div>
