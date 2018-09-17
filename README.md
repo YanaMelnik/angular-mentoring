@@ -8,7 +8,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - node app.js
 
 ### Frontend
-- npm run start
+- ng serve --proxy-config proxy.conf.json
 
 
 ## Development server
