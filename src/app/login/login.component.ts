@@ -1,16 +1,20 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AutoUnsubscribe } from '../core/decorator';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+
+@AutoUnsubscribe()
+export class LoginComponent implements OnInit {
   public username: string;
   public password: string;
-  private userLogInSubscription;
+  private sub: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -21,7 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login() {
-    this.userLogInSubscription = this.authService.login(this.username, this.password)
+    this.sub = this.authService.login(this.username, this.password)
       .subscribe(
         (res: boolean) => {
           res
@@ -29,9 +33,5 @@ export class LoginComponent implements OnInit, OnDestroy {
           : console.log( new Error('Sorry, this user is not registered'));
         }
       );
-  }
-
-  ngOnDestroy() {
-    this.userLogInSubscription.unsubscribe();
   }
 }

@@ -1,14 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoadingService } from './services/loading.service';
+import { AutoUnsubscribe } from '../../core/decorator';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-loading-block',
   templateUrl: './loading-block.component.html',
   styleUrls: ['./loading-block.component.css']
 })
-export class LoadingBlockComponent implements OnInit, OnDestroy {
+
+@AutoUnsubscribe(['loaderSubscription'])
+export class LoadingBlockComponent implements OnInit {
   public showLoader: boolean;
-  private loaderSubscription;
+  private loaderSubscription: Subscription;
 
   constructor(
     private loadingService: LoadingService
@@ -25,9 +29,5 @@ export class LoadingBlockComponent implements OnInit, OnDestroy {
           this.showLoader = res;
         }
       );
-  }
-
-  ngOnDestroy() {
-    this.loaderSubscription.unsubscribe();
   }
 }

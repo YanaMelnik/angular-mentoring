@@ -1,17 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CoursesListItem, CoursesListItemModel } from '../models/courses-list-item.model';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from '../services/courses.service';
 import { DatePipe } from '@angular/common';
 import { fieldHasError } from '../../common/utils/utils';
 import DATE_FORMAT from '../../common/constants/date-format';
 // rxjs
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AutoUnsubscribe } from '../../core/decorator';
 // @Ngrx
 import { Store, select } from '@ngrx/store';
-import { AppState, CoursesState, getCoursesState, getSelectedCourse } from '../../core/+store';
+import { AppState, getSelectedCourse } from '../../core/+store';
 import * as CoursesActions from '../../core/+store/courses/courses.actions';
 
 
@@ -20,14 +20,11 @@ import * as CoursesActions from '../../core/+store/courses/courses.actions';
   templateUrl: './course-form.component.html',
   styleUrls: ['./course-form.component.css']
 })
+
 @AutoUnsubscribe()
-export class CourseFormComponent implements OnInit, OnDestroy {
+export class CourseFormComponent implements OnInit {
   courseForm: FormGroup;
   course: CoursesListItemModel = new CoursesListItem();
-  private createFormSubscription;
-  private updateCourseSubscription;
-  private addCourseSubscription;
-  // public coursesState$: Observable<CoursesState>;
   private sub: Subscription;
 
 
@@ -72,7 +69,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
         params => {
           const id = params.get('id');
           if (id) {
-            this.store.dispatch(new CoursesActions.GetCourse(+id));
+            this.store.dispatch(new CoursesActions.GetCourse(Number(id)));
           }
         });
 
@@ -138,15 +135,5 @@ export class CourseFormComponent implements OnInit, OnDestroy {
 
   isFieldInvalid(formControl: AbstractControl): boolean {
     return fieldHasError(formControl);
-  }
-
-  ngOnDestroy(): void {
-    [
-      this.createFormSubscription,
-      this.updateCourseSubscription,
-      this.addCourseSubscription
-    ]
-      .filter(subscrip => !!subscrip)
-      .forEach(item => item.unsubscribe());
   }
 }

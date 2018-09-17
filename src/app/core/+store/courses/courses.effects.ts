@@ -40,7 +40,7 @@ export class CoursesEffects {
     ofType<CoursesActions.GetCourse>(CoursesActions.CoursesActionTypes.GET_COURSE),
     pluck('payload'),
     switchMap(payload =>
-      this.coursesService.getCourseById(+payload).pipe(
+      this.coursesService.getCourseById(Number(payload)).pipe(
         map(res => new CoursesActions.GetCourseSuccess(res)),
         catchError(error => of(new CoursesActions.GetCourseError(error)))
       )

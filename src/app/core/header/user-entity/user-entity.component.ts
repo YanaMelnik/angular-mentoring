@@ -1,18 +1,21 @@
-import { Component, OnDestroy, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { AutoUnsubscribe } from '../../decorator';
 
 @Component({
   selector: 'app-user-login',
   templateUrl: './user-entity.component.html',
   styleUrls: ['./user-entity.component.css']
 })
-export class UserEntityComponent implements OnInit, DoCheck, OnDestroy {
-  private userLogOutSubscription;
-  private userInfoSubscription;
-  private userAuthSubscription;
+
+@AutoUnsubscribe(['userLogOutSubscription', 'userInfoSubscription', 'userAuthSubscription'])
+export class UserEntityComponent implements OnInit, DoCheck {
+  private userLogOutSubscription: Subscription;
+  private userInfoSubscription: Subscription;
+  private userAuthSubscription: Subscription;
   public firstName: string;
   public lastName: string;
   public userIsAuth: boolean;
@@ -59,15 +62,5 @@ export class UserEntityComponent implements OnInit, DoCheck, OnDestroy {
 
   public isAuthenticated(): Observable<boolean> {
     return this.authService.isAuthenticated();
-  }
-
-  ngOnDestroy() {
-    [
-      this.userLogOutSubscription,
-      this.userInfoSubscription,
-      this.userAuthSubscription
-    ]
-      .filter(subscrip => !!subscrip)
-      .forEach(item => item.unsubscribe());
   }
 }
