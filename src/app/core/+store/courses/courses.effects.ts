@@ -89,7 +89,7 @@ export class CoursesEffects {
       this.coursesService.removeCoursesItem(payload.id).pipe(
         map(() => {
             this.store.dispatch(new CoursesActions.GetCourses());
-            return new CoursesActions.DeleteCourseSuccess(payload);
+            return new CoursesActions.DeleteCourseSuccess();
           }
         ),
         catchError(error => of(new CoursesActions.DeleteCourseError(error)))
