@@ -13,13 +13,19 @@ import { DurationComponent } from './course-form/duration/duration.component';
 import { DateComponent } from './course-form/date/date.component';
 import { MultiselectComponent } from './course-form/multiselect/multiselect.component';
 import { CoursesListRoutingModule } from './courses-list-routing.module';
+import { StoreModule } from '@ngrx/store';
+import { CoursesEffects, coursesReducer } from './../core/+store';
+import { EffectsModule } from '@ngrx/effects';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    CoursesListRoutingModule
+    CoursesListRoutingModule,
+    StoreModule.forFeature('courses', coursesReducer),
+    EffectsModule.forFeature([CoursesEffects])
   ],
   declarations: [
     CoursesListComponent,

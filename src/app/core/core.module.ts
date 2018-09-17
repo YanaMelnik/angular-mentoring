@@ -7,11 +7,13 @@ import { UserEntityComponent } from './header/user-entity/user-entity.component'
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { FormsModule } from '@angular/forms';
 import { PathNotFoundComponent } from './path-not-found/path-not-found.component';
+import { CoreStoreModule } from './+store/core-store.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    CoreStoreModule
   ],
   declarations: [
     HeaderComponent,

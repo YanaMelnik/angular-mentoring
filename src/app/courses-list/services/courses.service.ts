@@ -14,10 +14,7 @@ export class CoursesService {
   }
 
   public getCoursesItems(countOnPage: number, pageNumber: number): Observable<PaginationListModel<CoursesListItemModel>> {
-    return this.http.get(`/api/courses?start=${pageNumber}&count=${countOnPage}`)
-      .pipe(
-        map(res => res as PaginationListModel<CoursesListItemModel>)
-      );
+    return this.http.get<PaginationListModel<CoursesListItemModel>>(`/api/courses?start=${pageNumber}&count=${countOnPage}`);
     // TODO: If I understand correctly, I need to create new interface for all response (DTO) from BE?
   }
 
@@ -34,30 +31,24 @@ export class CoursesService {
     return newCourse;
   }
 
-  public addCourse(newCourse: CoursesListItemModel) {
-    return this.http.put('/api/course', {newCourse});
+  public addCourse(newCourse: CoursesListItemModel): Observable<CoursesListItemModel> {
+    return this.http.put<CoursesListItemModel>('/api/courses', {newCourse});
   }
 
   public getCourseById(courseId: number): Observable<CoursesListItemModel> {
-    return this.http.get(`/api/course/${courseId}`)
-      .pipe(
-        map(res => res as CoursesListItemModel)
-      );
+    return this.http.get<CoursesListItemModel>(`/api/courses/${courseId}`);
   }
 
-  public updateCoursesItem(course: CoursesListItemModel): Observable<object>  {
-    return this.http.post('/api/course', {course});
+  public updateCoursesItem(course: CoursesListItemModel): Observable<CoursesListItemModel>  {
+    return this.http.post<CoursesListItemModel>('/api/courses', {course});
   }
 
   public removeCoursesItem(id: number): Observable<object> {
-    return this.http.delete(`/api/course/${id}`);
+    return this.http.delete(`/api/courses/${id}`);
   }
 
-  public searchCourseItem(text: string): Observable<object> {
+  public searchCourseItem(text: string): Observable<CoursesListItemModel[]> {
     console.log(text);
-    return this.http.get(`/api/course/search?textFragment=${encodeURIComponent(text)}`) // TODO #number do not enter in request
-      .pipe(
-        map(res => res as Array<CoursesListItem>)
-      );
+    return this.http.get<CoursesListItemModel[]>(`/api/course/search?textFragment=${encodeURIComponent(text)}`);
   }
 }

@@ -28,8 +28,8 @@
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js"]
-
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -122,5 +122,17 @@
       }
     }
   },
-  "defaultProject": "angular-mentoring"
+  "defaultProject": "angular-mentoring",
+  "schematics": {
+    "@ngrx/schematics:component": {
+      "prefix": "app",
+      "styleext": "css"
+    },
+    "@ngrx/schematics:directive": {
+      "prefix": "app"
+    }
+  },
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

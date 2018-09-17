@@ -10,6 +10,7 @@ export class OrderByCourseDatePipe implements PipeTransform {
   constructor() {}
 
   transform(items: CoursesListItemModel[]): CoursesListItemModel[] {
+    console.log(items);
     return items.sort((firstItem, secondItem) => {
         return parseDateString(secondItem) - parseDateString(firstItem);
       });

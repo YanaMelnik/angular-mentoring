@@ -43,22 +43,22 @@ describe('HighlightNewCourseDirective', () => {
     des = fixture.debugElement.queryAll(By.directive(HighlightNewCourseDirective));
   });
 
-  it('should has green border in course item, if current date is today', () => {
+  it('should has green border in courses item, if current date is today', () => {
       const borderColor = des[0].nativeElement.style.borderColor;
       expect(borderColor).toBe('green');
   });
 
-  it('should has green border in course item, if current date is one week ago', () => {
+  it('should has green border in courses item, if current date is one week ago', () => {
       const borderColor = des[1].nativeElement.style.borderColor;
       expect(borderColor).toBe('green');
   });
 
-  it('should has blue border in course item, if current date is in a future', () => {
+  it('should has blue border in courses item, if current date is in a future', () => {
       const borderColor = des[2].nativeElement.style.borderColor;
       expect(borderColor).toBe('blue');
   });
 
-  it('should has not border in course item, if current date is more than two week ago', () => {
+  it('should has not border in courses item, if current date is more than two week ago', () => {
     const borderColor = des[3].nativeElement.style.borderColor;
     expect(borderColor).toBe('');
   });

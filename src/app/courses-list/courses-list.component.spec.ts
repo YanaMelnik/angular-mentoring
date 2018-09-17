@@ -61,7 +61,7 @@ describe('CoursesListComponent', () => {
   describe('stand alone testing', () => {
     describe('#showMore', () => {
       it('should show more courses when user click show more button', () => {
-        const button = fixture.debugElement.query(By.css('.btn-course-list_more'));
+        const button = fixture.debugElement.query(By.css('.btn-courses-list_more'));
         button.triggerEventHandler('click', null);
 
         expect(console.log).toHaveBeenCalledWith('Show more.');
@@ -69,7 +69,7 @@ describe('CoursesListComponent', () => {
     });
 
     describe('#onDeleteCourse', () => {
-      it('should delete course item when user click delete button', () => {
+      it('should delete courses item when user click delete button', () => {
         spyOn(window, 'confirm').and.returnValue(true);
         spyOn(coursesService, 'removeCoursesItem');
         const courseId = 7;

@@ -26,7 +26,7 @@ export class UserEntityComponent implements OnInit, DoCheck, OnDestroy {
 
   ngOnInit() {
     this.userAuthSubscription = this.authService.listenForLoginChanges()
-    // TODO Can't understand how to implement it in different way with out bugs
+    // TODO Can't understand how to implement it in different way without bugs
       .subscribe((res) => {
         this.userIsAuth = res;
         if (res) {

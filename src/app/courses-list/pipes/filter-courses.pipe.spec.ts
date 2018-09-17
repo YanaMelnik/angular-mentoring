@@ -29,7 +29,7 @@ describe('FilterCoursesPipe', () => {
     expect(pipe.transform(allCourses, searchWord)).toEqual(allCourses);
   });
 
-  it('should not return any element if word for searching does not fit any course', () => {
+  it('should not return any element if word for searching does not fit any courses', () => {
     const searchWord = '3';
     expect(pipe.transform(allCourses, searchWord)).toEqual([]);
   });

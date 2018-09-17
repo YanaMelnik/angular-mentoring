@@ -40,7 +40,7 @@ describe('CoursesListComponent', () => {
   });
 
   describe('#onDeleteCourse', () => {
-    it('should delete course item when user click delete button', () => {
+    it('should delete courses item when user click delete button', () => {
       spyOn(window, 'confirm').and.returnValue(true);
       spyOn(coursesService, 'removeCoursesItem');
       sut.onDeleteCourse(courseItemTest.id);
@@ -49,7 +49,7 @@ describe('CoursesListComponent', () => {
   });
 
   describe('#onSearchCourse', () => {
-    it('should search course that match with search words when user click search button', () => {
+    it('should search courses that match with search words when user click search button', () => {
       const courseName = 'course';
       sut.onSearchCourse(courseName);
       expect(sut.courseName).toBe(courseName);

@@ -92,15 +92,15 @@ describe('CoursesService', () => {
      expect(sut.getCourseById(1)).toEqual(firstCourse);
     });
 
-    it('should return null if required course is not present in courses list', () => {
+    it('should return null if required courses is not present in courses list', () => {
       expect(sut.getCourseById(8)).toBeNull();
     });
   });
 
   describe('#updateCoursesItem', () => {
-    it('should update course', () => {
+    it('should update courses', () => {
      sut.updateCoursesItem();
-     expect(console.log).toHaveBeenCalledWith('Update course');
+     expect(console.log).toHaveBeenCalledWith('Update courses');
     });
   });
 
@@ -110,7 +110,7 @@ describe('CoursesService', () => {
     beforeEach(() => {
       objCourse = {
         id: 8,
-        title: 'video course 5',
+        title: 'video courses 5',
         creationDate: new Date(2018, 12, 12),
         topRates: true,
         duration: 75,
@@ -118,18 +118,18 @@ describe('CoursesService', () => {
       };
       newCourse = new CoursesListItem(
         8,
-        'video course 5',
+        'video courses 5',
         new Date(2018, 12, 12),
         true,
         75,
         'Test test');
     });
 
-    it('should create course', () => {
+    it('should create courses', () => {
       expect(sut.createCourse(objCourse)).toEqual(newCourse);
     });
 
-    it('should create course', () => {
+    it('should create courses', () => {
       sut.createCourse(objCourse);
      expect(sut.coursesItemList[2]).toEqual(newCourse);
     });

@@ -30,13 +30,13 @@ describe('CoursesListItemComponent', () => {
       spyOn(sut.deleteCourse, 'emit');
     });
 
-    it('should delete course when user press delete button', () => {
+    it('should delete courses when user press delete button', () => {
       spyOn(window, 'confirm').and.returnValue(true);
       sut.delete();
       expect(sut.deleteCourse.emit).toHaveBeenCalledWith(sut.coursesItem.id);
     });
 
-    it('should not delete course when user press delete button but not agree in confirm window', () => {
+    it('should not delete courses when user press delete button but not agree in confirm window', () => {
       spyOn(window, 'confirm').and.returnValue(false);
       sut.delete();
       expect(sut.deleteCourse.emit).not.toHaveBeenCalled();

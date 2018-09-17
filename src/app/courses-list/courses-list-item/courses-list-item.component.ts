@@ -8,11 +8,11 @@ import { CoursesListItemModel } from '../models/courses-list-item.model';
 })
 export class CoursesListItemComponent implements OnInit {
   @Input() public coursesItem: CoursesListItemModel;
-  @Output() public deleteCourse = new EventEmitter<number>();
+  @Output() public deleteCourse = new EventEmitter<CoursesListItemModel>();
   @Output() public editCourse = new EventEmitter<number>();
 
   delete() {
-    this.deleteCourse.emit(this.coursesItem.id);
+    this.deleteCourse.emit(this.coursesItem);
   }
 
   edit() {

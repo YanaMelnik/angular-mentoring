@@ -67,7 +67,7 @@ app.get('/api/courses', (req, res) => {
   }
 });
 
-app.put('/api/course', (req, res) => {
+app.put('/api/courses', (req, res) => {
   const {newCourse} = req.body;
   newCourse.id = courseList.length + 1;
   courseList.push(newCourse);
@@ -75,7 +75,7 @@ app.put('/api/course', (req, res) => {
   res.send();
 });
 
-app.get('/api/course/search', (req, res) => {
+app.get('/api/courses/search', (req, res) => {
   const searchText = req.query.textFragment.toLowerCase();
   const searchCourse = courseList.filter(elem => {
     return elem.title.toLowerCase().includes(searchText)
@@ -91,7 +91,7 @@ app.get('/api/course/search', (req, res) => {
 });
 
 
-app.post('/api/course', (req, res) => {
+app.post('/api/courses', (req, res) => {
   const {course} = req.body;
   const courseForUpdate = courseList.findIndex(elem => elem.id === course.id);
   if (courseForUpdate !== -1) {
@@ -104,7 +104,7 @@ app.post('/api/course', (req, res) => {
   }
 });
 
-app.delete('/api/course/:id', (req, res) => {
+app.delete('/api/courses/:id', (req, res) => {
   const id = +req.params.id;
   const deleteCourseIndex = courseList.findIndex(elem => elem.id === id);
   if (deleteCourseIndex !== -1) {
@@ -117,9 +117,9 @@ app.delete('/api/course/:id', (req, res) => {
   }
 });
 
-app.get('/api/course/:id', (req, res) => {
+app.get('/api/courses/:id', (req, res) => {
   const id = +req.params.id;
-  console.log('want to find course with id: ' + id);
+  console.log('want to find courses with id: ' + id);
   const courseIndex = courseList.findIndex(elem => elem.id === id);
   if (courseIndex !== -1) {
     res.status(200);
