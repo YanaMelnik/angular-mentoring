@@ -15,7 +15,6 @@ export class CoursesService {
 
   public getCoursesItems(countOnPage: number, pageNumber: number): Observable<PaginationListModel<CoursesListItemModel>> {
     return this.http.get<PaginationListModel<CoursesListItemModel>>(`/api/courses?start=${pageNumber}&count=${countOnPage}`);
-    // TODO: If I understand correctly, I need to create new interface for all response (DTO) from BE?
   }
 
   public createCourse(obj: any): CoursesListItemModel {

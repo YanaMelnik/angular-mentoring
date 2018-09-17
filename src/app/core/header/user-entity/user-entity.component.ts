@@ -13,12 +13,12 @@ import { AutoUnsubscribe } from '../../decorator';
 
 @AutoUnsubscribe(['userLogOutSubscription', 'userInfoSubscription', 'userAuthSubscription'])
 export class UserEntityComponent implements OnInit, DoCheck {
-  private userLogOutSubscription: Subscription;
-  private userInfoSubscription: Subscription;
-  private userAuthSubscription: Subscription;
   public firstName: string;
   public lastName: string;
   public userIsAuth: boolean;
+  private userLogOutSubscription: Subscription;
+  private userInfoSubscription: Subscription;
+  private userAuthSubscription: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -47,7 +47,6 @@ export class UserEntityComponent implements OnInit, DoCheck {
         ({firstName, lastName}) => {
           this.firstName = firstName;
           this.lastName = lastName;
-          return;
         }
       );
   }

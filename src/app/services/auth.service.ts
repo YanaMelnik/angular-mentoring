@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   public logout(): Observable<object> {
-    const userToken = localStorage.getItem('userToken');
+    const userToken = this.getUserToken();
     localStorage.removeItem('userToken');
     return this.userService.logOut(userToken)
       .pipe(
@@ -33,8 +33,12 @@ export class AuthService {
       );
   }
 
+  public getUserToken(): string {
+    return localStorage.getItem('userToken');
+  }
+
   public isAuthenticated(): Observable<boolean>  {
-    return of(!!localStorage.getItem('userToken'));
+    return of(!!this.getUserToken());
   }
 
   public getUserInfo(): Observable<UserInfoModel>  {

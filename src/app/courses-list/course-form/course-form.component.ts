@@ -23,8 +23,8 @@ import * as CoursesActions from '../../core/+store/courses/courses.actions';
 
 @AutoUnsubscribe()
 export class CourseFormComponent implements OnInit {
-  courseForm: FormGroup;
-  course: CoursesListItemModel = new CoursesListItem();
+  public courseForm: FormGroup;
+  public course: CoursesListItemModel = new CoursesListItem();
   private sub: Subscription;
 
 

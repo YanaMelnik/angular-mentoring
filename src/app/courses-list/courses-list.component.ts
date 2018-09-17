@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CoursesService } from './services/courses.service';
 import { FilterCoursesPipe } from './pipes/filter-courses.pipe';
+import { CoursesListItemModel } from './models/courses-list-item.model';
+import { AutoUnsubscribe } from '../core/decorator';
+import { coursesCountOnPage, coursesPageNumber } from '../common/utils/constant';
 import { Router } from '@angular/router';
 
 // rxjs
@@ -11,8 +14,6 @@ import { filter, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { AppState, getCoursesData, getCoursesError } from '../core/+store';
 import * as CoursesActions from '../core/+store/courses/courses.actions';
-import { CoursesListItemModel } from './models/courses-list-item.model';
-import { AutoUnsubscribe } from '../core/decorator';
 
 @Component({
   selector: 'app-courses-list',
@@ -27,13 +28,13 @@ export class CoursesListComponent implements OnInit {
   public coursesItems = new BehaviorSubject([]);
   public courseName: string;
   public showMoreCourse: boolean;
-  public pageNumber = 1;
-  public countOnPage = 3;
+  public pageNumber = coursesPageNumber;
+  public countOnPage = coursesCountOnPage;
+  public courses$: Observable<ReadonlyArray<CoursesListItemModel>>;
+  public coursesError$: Observable<Error | string>;
   private coursesItemsSubscription: Subscription;
   private searchedCourseSubscription: Subscription;
   private searchInput = new Subject<string>();
-  public courses$: Observable<ReadonlyArray<CoursesListItemModel>>;
-  public coursesError$: Observable<Error | string>;
 
   constructor(
     private router: Router,
@@ -56,7 +57,7 @@ export class CoursesListComponent implements OnInit {
       )
       .subscribe((courseName) => {
         console.log(courseName);
-        this.doSearchCourse(courseName.toString());
+        this.doSearchCourse(courseName);
       });
   }
 

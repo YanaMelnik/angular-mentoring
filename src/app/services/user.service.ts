@@ -25,9 +25,6 @@ export class UserService {
   }
 
   public getUserInfo(): Observable<UserInfoModel> {
-    return this.http.get('api/auth/user')
-      .pipe(
-        map(res => res as UserInfoModel)
-      );
+    return this.http.get<UserInfoModel>('api/auth/user');
   }
 }
