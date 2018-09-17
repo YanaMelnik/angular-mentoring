@@ -55,6 +55,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
       .subscribe(course => {
         if (course) {
           this.course = course;
+          this.createForm();
         } else {
           this.course = new CoursesListItem(
             null,
