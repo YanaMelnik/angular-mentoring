@@ -61,16 +61,16 @@ export class CoursesListComponent implements OnInit {
       });
   }
 
-  getCoursesItems(countOnPage: number, pageNumber: number) {
-    this.coursesItemsSubscription = this.coursesService.getCoursesItems(countOnPage, pageNumber)
-      .subscribe(
-        (res) => {
-          this.coursesItems.next([...res.items]); // TODO: problem with show more
-          this.showMoreCourse = res.moreAvailable;
-        },
-        err => console.log('Can\'t retrieve courses', err)
-      );
-  }
+  // getCoursesItems(countOnPage: number, pageNumber: number) {
+  //   this.coursesItemsSubscription = this.coursesService.getCoursesItems(countOnPage, pageNumber)
+  //     .subscribe(
+  //       (res) => {
+  //         this.coursesItems.next([...res.items]); // TODO: problem with show more
+  //         this.showMoreCourse = res.moreAvailable;
+  //       },
+  //       err => console.log('Can\'t retrieve courses', err)
+  //     );
+  // }
 
   onDeleteCourse(course: CoursesListItemModel) {
     const needToDel = window.confirm('Are you really want to delete this courses?');
@@ -108,7 +108,7 @@ export class CoursesListComponent implements OnInit {
   }
 
   showMore() {
-    this.pageNumber += 1;
-    this.getCoursesItems(this.countOnPage, this.pageNumber);
+    // this.pageNumber += 1;
+    // this.getCoursesItems(this.countOnPage, this.pageNumber);
   }
 }

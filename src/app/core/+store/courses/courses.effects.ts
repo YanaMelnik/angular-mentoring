@@ -8,8 +8,9 @@ import { CoursesListItemModel } from '../../../courses-list/models/courses-list-
 import { Observable, of } from 'rxjs';
 import { concatMap, pluck, switchMap, map, catchError } from 'rxjs/operators';
 // @Ngrx
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
+import { AppState } from '../app.state';
 
 
 
@@ -19,6 +20,7 @@ export class CoursesEffects {
   constructor(
     private actions$: Actions,
     private coursesService: CoursesService,
+    private store: Store<AppState>,
     private router: Router
   ) {
     console.log('[TASKS EFFECTS]');
@@ -86,6 +88,7 @@ export class CoursesEffects {
     concatMap((payload: CoursesListItemModel) =>
       this.coursesService.removeCoursesItem(payload.id).pipe(
         map(() => {
+            this.store.dispatch(new CoursesActions.GetCourses());
             return new CoursesActions.DeleteCourseSuccess(payload);
           }
         ),

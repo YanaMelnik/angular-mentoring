@@ -86,7 +86,6 @@ export class DeleteCourse implements Action {
 
 export class DeleteCourseSuccess implements Action {
   readonly type = CoursesActionTypes.DELETE_COURSE_SUCCESS;
-  constructor(public payload: CoursesListItemModel) { }
 }
 
 export class DeleteCourseError implements Action {

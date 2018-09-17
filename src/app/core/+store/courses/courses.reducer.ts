@@ -127,11 +127,8 @@ export function coursesReducer(
 
     case CoursesActionTypes.DELETE_COURSE_SUCCESS: {
       console.log('DELETE_COURSE_SUCCESS action being handled!');
-      const course = { ...<CoursesListItemModel>action.payload };
-      const data = state.data.filter(с => с.id !== course.id);
       return {
-        ...state,
-        data
+        ...state
       };
     }
 
