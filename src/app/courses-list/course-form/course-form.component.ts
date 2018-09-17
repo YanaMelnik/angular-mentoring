@@ -48,23 +48,6 @@ export class CourseFormComponent implements OnInit, OnDestroy {
       null,
       '');
 
-    // this.coursesState$ = this.store.pipe(select(getCoursesState));
-    //
-    // this.sub = this.coursesState$
-    //   .subscribe(
-    //     coursesState => {
-    //   if (coursesState.selectedCourse) {
-    //     this.course = coursesState.selectedCourse;
-    //   } else {
-    //     this.course = new CoursesListItem(
-    //       null,
-    //       '',
-    //       null,
-    //       null,
-    //       null,
-    //       '');
-    //   } });
-
     this.sub = this.store
       .pipe(
         select(getSelectedCourse)
