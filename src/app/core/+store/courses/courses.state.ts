@@ -6,6 +6,8 @@ export interface CoursesState {
   readonly loading: boolean;
   readonly loaded: boolean;
   readonly searchCourse: string;
+  readonly paginationInfo: object;
+  readonly moreAvailableCourse: boolean;
   readonly error: Error | string;
 }
 
@@ -15,5 +17,7 @@ export const initialCourseState: CoursesState = {
   loading: false,
   loaded: false,
   searchCourse: null,
+  paginationInfo: null,
+  moreAvailableCourse: false,
   error: null
 };

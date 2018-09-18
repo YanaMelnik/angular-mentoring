@@ -11,22 +11,26 @@ export function coursesReducer(
   switch (action.type) {
     case CoursesActionTypes.GET_COURSES: {
       console.log('GET_COURSES action being handled!');
+      const paginationInfo = action.payload;
       return {
         ...state,
-        loading: true
+        loading: true,
+        paginationInfo
       };
     }
 
     case CoursesActionTypes.GET_COURSES_SUCCESS: {
       console.log('GET_COURSES_SUCCESS action being handled!');
-      const data = [...<Array<CoursesListItemModel>>action.payload];
+      const data = action.payload.items;
+      const moreAvailableCourse = action.payload.moreAvailable;
       return {
         ...state,
         data,
         loading: false,
         loaded: true,
         selectedCourse: null,
-        searchCourse: null
+        searchCourse: null,
+        moreAvailableCourse
       };
     }
 
@@ -133,12 +137,14 @@ export function coursesReducer(
 
     case CoursesActionTypes.SEARCH_COURSES_SUCCESS: {
       console.log('SEARCH_COURSES_SUCCESS action being handled!');
-      const data = [...<Array<CoursesListItemModel>>action.payload];
+      const data = action.payload.items;
+      const moreAvailableCourse = action.payload.moreAvailable;
       return {
         ...state,
         loading: false,
         loaded: true,
-        data
+        data,
+        moreAvailableCourse
       };
     }
 

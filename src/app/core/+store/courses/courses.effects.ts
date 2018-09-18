@@ -11,6 +11,8 @@ import { concatMap, pluck, switchMap, map, catchError } from 'rxjs/operators';
 import { Action, Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { AppState } from '../app.state';
+import { PaginationInfo } from '../../../courses-list/models/pagination-list.model';
+import { coursesCountOnPage, coursesPageNumber } from '../../../common/utils/constant';
 
 
 
@@ -26,12 +28,17 @@ export class CoursesEffects {
     console.log('[TASKS EFFECTS]');
   }
 
+  private navigateToMainPage() {
+    this.router.navigate(['/']);
+  }
+
   @Effect()
   getCourses$: Observable<Action> = this.actions$.pipe(
     ofType<CoursesActions.GetCourses>(CoursesActions.CoursesActionTypes.GET_COURSES),
-    switchMap(() =>
-      this.coursesService.getCoursesItems(10, 1).pipe(
-        map(res => new CoursesActions.GetCoursesSuccess(res.items)),
+    pluck('payload'),
+    switchMap((payload: PaginationInfo) =>
+      this.coursesService.getCoursesItems(payload.countOnPage, payload.pageNumber, payload.searchText).pipe(
+        map(res => new CoursesActions.GetCoursesSuccess(res)),
         catchError(error => of(new CoursesActions.GetCoursesError(error)))
       )
     )
@@ -56,7 +63,7 @@ export class CoursesEffects {
     concatMap((payload: CoursesListItemModel) =>
       this.coursesService.updateCoursesItem(payload).pipe(
         map(res => {
-            this.router.navigate(['/courses']);
+            this.navigateToMainPage();
             return new CoursesActions.UpdateCourseSuccess(res);
           }
         ),
@@ -72,7 +79,7 @@ export class CoursesEffects {
     concatMap((payload: CoursesListItemModel) =>
       this.coursesService.addCourse(payload).pipe(
         map(course => {
-            this.router.navigate(['/courses']);
+            this.navigateToMainPage();
             return new CoursesActions.CreateCourseSuccess(course);
           }
         ),
@@ -104,7 +111,13 @@ export class CoursesEffects {
     concatMap((payload: CoursesListItemModel) =>
       this.coursesService.removeCoursesItem(payload.id).pipe(
         map(() => {
-            this.store.dispatch(new CoursesActions.GetCourses());
+            this.store.dispatch(new CoursesActions.GetCourses(
+              {
+                countOnPage: coursesCountOnPage,
+                pageNumber: coursesPageNumber,
+                searchText: ''
+              })
+            );
             return new CoursesActions.DeleteCourseSuccess();
           }
         ),
@@ -117,8 +130,8 @@ export class CoursesEffects {
   searchCourses$: Observable<Action> = this.actions$.pipe(
     ofType<CoursesActions.SearchCourses>(CoursesActions.CoursesActionTypes.SEARCH_COURSES),
     pluck('payload'),
-    switchMap((payload: string) =>
-      this.coursesService.searchCourseItem(payload).pipe(
+    switchMap((payload: PaginationInfo) =>
+      this.coursesService.getCoursesItems(payload.countOnPage, payload.pageNumber, payload.searchText).pipe(
         map(res => new CoursesActions.SearchCoursesSuccess(res)),
         catchError(error => of(new CoursesActions.SearchCoursesError(error)))
       )

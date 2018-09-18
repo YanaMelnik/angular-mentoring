@@ -13,8 +13,10 @@ export class CoursesService {
   constructor(private http: HttpClient) {
   }
 
-  public getCoursesItems(countOnPage: number, pageNumber: number): Observable<PaginationListModel<CoursesListItemModel>> {
-    return this.http.get<PaginationListModel<CoursesListItemModel>>(`/api/courses?start=${pageNumber}&count=${countOnPage}`);
+  public getCoursesItems(countOnPage: number, pageNumber: number, text: string): Observable<PaginationListModel<CoursesListItemModel>> {
+    return this.http.get<PaginationListModel<CoursesListItemModel>>(
+      `/api/courses?start=${pageNumber}&count=${countOnPage}&textFragment=${encodeURIComponent(text)}`
+    );
   }
 
   public createCourse(obj: any): CoursesListItemModel {

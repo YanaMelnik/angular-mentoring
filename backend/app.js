@@ -49,18 +49,30 @@ app.get('/api/courses', (req, res) => {
     const pageNumber = req.query.start;
     const countOnPage = req.query.count;
     const endCourses = countOnPage * pageNumber;
-    const startCourses = countOnPage * (pageNumber - 1);
+    const startCourses = 0;
 
-    const items = courseList.slice(startCourses, endCourses);
-    const moreAvailable = courseList.length > endCourses;
+    const searchText = req.query.textFragment.toLowerCase();
+    const searchCourse = courseList.filter(elem => {
+      return elem.title.toLowerCase().includes(searchText)
+        || elem.description.toLowerCase().includes(searchText);
+    });
 
-    const response = {
-      items,
-      moreAvailable
-    };
+    if (searchCourse.length !== 0) {
+      const items = searchCourse.slice(startCourses, endCourses);
+      const moreAvailable = courseList.length > endCourses;
 
-    res.status(200);
-    res.json(response);
+      const response = {
+        items,
+        moreAvailable
+      };
+
+      res.status(200);
+      res.json(response);
+    } else {
+      res.status(404);
+      res.send();
+    }
+
   } else {
     res.status(403);
     res.send();
@@ -74,22 +86,6 @@ app.put('/api/courses', (req, res) => {
   res.status(200);
   res.send();
 });
-
-app.get('/api/courses/search', (req, res) => {
-  const searchText = req.query.textFragment.toLowerCase();
-  const searchCourse = courseList.filter(elem => {
-    return elem.title.toLowerCase().includes(searchText)
-      || elem.description.toLowerCase().includes(searchText);
-  });
-  if (searchCourse.length !== 0) {
-    res.status(200);
-    res.json(searchCourse);
-  } else {
-    res.status(404);
-    res.send();
-  }
-});
-
 
 app.post('/api/courses', (req, res) => {
   const {course} = req.body;

@@ -7,12 +7,12 @@ import { coursesCountOnPage, coursesPageNumber } from '../common/utils/constant'
 import { Router } from '@angular/router';
 
 // rxjs
-import { BehaviorSubject, Subject, Observable, Subscription } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { filter, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 // @Ngrx
 import { Store, select } from '@ngrx/store';
-import { AppState, getCoursesData, getCoursesError } from '../core/+store';
+import { AppState, getCoursesData, getCoursesError, getMoreCourseInfo } from '../core/+store';
 import * as CoursesActions from '../core/+store/courses/courses.actions';
 
 @Component({
@@ -23,11 +23,15 @@ import * as CoursesActions from '../core/+store/courses/courses.actions';
   providers: [FilterCoursesPipe]
 })
 
-@AutoUnsubscribe(['coursesItemsSubscription', 'searchedCourseSubscription'])
+@AutoUnsubscribe(
+  [
+    'coursesItemsSubscription',
+    'searchedCourseSubscription'
+  ]
+)
 export class CoursesListComponent implements OnInit {
-  public coursesItems = new BehaviorSubject([]);
-  public courseName: string;
-  public showMoreCourse: boolean;
+  public courseName = '';
+  public showMoreCourse$: Observable<boolean>;
   public pageNumber = coursesPageNumber;
   public countOnPage = coursesCountOnPage;
   public courses$: Observable<ReadonlyArray<CoursesListItemModel>>;
@@ -45,7 +49,15 @@ export class CoursesListComponent implements OnInit {
     console.log('We have a store! ', this.store);
     this.courses$ = this.store.pipe(select(getCoursesData));
     this.coursesError$ = this.store.pipe(select(getCoursesError));
-    this.store.dispatch(new CoursesActions.GetCourses());
+    this.showMoreCourse$ = this.store.pipe(select(getMoreCourseInfo));
+    this.store.dispatch(new CoursesActions.GetCourses(
+      {
+        countOnPage: this.countOnPage,
+        pageNumber: this.pageNumber,
+        searchText: ''
+        }
+      )
+    );
 
     this.searchInput
       .pipe(
@@ -56,9 +68,22 @@ export class CoursesListComponent implements OnInit {
       .subscribe((courseName) => {
         console.log(courseName);
         if (courseName.length) {
-          this.store.dispatch(new CoursesActions.SearchCourses(courseName));
+          this.store.dispatch(new CoursesActions.GetCourses(
+            {
+              countOnPage: coursesCountOnPage,
+              pageNumber: coursesPageNumber,
+              searchText: courseName
+            }
+          ));
         } else {
-          this.store.dispatch(new CoursesActions.GetCourses());
+          this.store.dispatch(new CoursesActions.GetCourses(
+            {
+              countOnPage: coursesCountOnPage,
+              pageNumber: coursesPageNumber,
+              searchText: ''
+            }
+          )
+          );
         }
       });
   }
@@ -85,7 +110,14 @@ export class CoursesListComponent implements OnInit {
   }
 
   showMore() {
-    // this.pageNumber += 1;
-    // this.getCoursesItems(this.countOnPage, this.pageNumber);
+    this.pageNumber += 1;
+    this.store.dispatch(new CoursesActions.GetCourses(
+      {
+        countOnPage: this.countOnPage,
+        pageNumber: this.pageNumber,
+        searchText: this.courseName
+      }
+      )
+    );
   }
 }

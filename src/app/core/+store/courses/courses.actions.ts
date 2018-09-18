@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { CoursesListItemModel } from '../../../courses-list/models/courses-list-item.model';
+import { PaginationInfo, PaginationListModel } from '../../../courses-list/models/pagination-list.model';
 
 // [Courses]- namespace
 export enum CoursesActionTypes {
@@ -25,11 +26,12 @@ export enum CoursesActionTypes {
 
 export class GetCourses implements Action {
   readonly type = CoursesActionTypes.GET_COURSES;
+  constructor(public payload: PaginationInfo) { }
 }
 
 export class GetCoursesSuccess implements Action {
   readonly type = CoursesActionTypes.GET_COURSES_SUCCESS;
-  constructor(public payload: CoursesListItemModel[]) { }
+  constructor(public payload: PaginationListModel<CoursesListItemModel>) { }
 }
 
 export class GetCoursesError implements Action {
@@ -89,7 +91,7 @@ export class SearchCourses implements Action {
 
 export class SearchCoursesSuccess implements Action {
   readonly type = CoursesActionTypes.SEARCH_COURSES_SUCCESS;
-  constructor(public payload: CoursesListItemModel[]) { }
+  constructor(public payload: PaginationListModel<CoursesListItemModel>) { }
 }
 
 export class SearchCoursesError implements Action {
