@@ -48,6 +48,6 @@ export class CoursesService {
 
   public searchCourseItem(text: string): Observable<CoursesListItemModel[]> {
     console.log(text);
-    return this.http.get<CoursesListItemModel[]>(`/api/course/search?textFragment=${encodeURIComponent(text)}`);
+    return this.http.get<CoursesListItemModel[]>(`/api/courses/search?textFragment=${encodeURIComponent(text)}`);
   }
 }

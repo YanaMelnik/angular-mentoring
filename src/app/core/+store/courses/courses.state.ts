@@ -5,6 +5,7 @@ export interface CoursesState {
   selectedCourse: Readonly<CoursesListItemModel>;
   readonly loading: boolean;
   readonly loaded: boolean;
+  readonly searchCourse: string;
   readonly error: Error | string;
 }
 
@@ -13,5 +14,6 @@ export const initialCourseState: CoursesState = {
   selectedCourse: null,
   loading: false,
   loaded: false,
+  searchCourse: null,
   error: null
 };

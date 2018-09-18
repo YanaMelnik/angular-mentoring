@@ -15,6 +15,9 @@ export enum CoursesActionTypes {
   UPDATE_COURSE = '[Courses] UPDATE_COURSE',
   UPDATE_COURSE_SUCCESS = '[Courses] UPDATE_COURSE_SUCCESS',
   UPDATE_COURSE_ERROR   = '[Courses] UPDATE_COURSE_ERROR',
+  SEARCH_COURSES = '[Courses] SEARCH_COURSE',
+  SEARCH_COURSES_SUCCESS = '[Courses] SEARCH_COURSE_SUCCESS',
+  SEARCH_COURSES_ERROR   = '[Courses] SEARCH_COURSE_ERROR',
   DELETE_COURSE = '[Courses] DELETE_COURSE',
   DELETE_COURSE_SUCCESS = '[Courses] DELETE_COURSE_SUCCESS',
   DELETE_COURSE_ERROR = '[Courses] DELETE_COURSE_ERROR'
@@ -79,6 +82,21 @@ export class UpdateCourseError implements Action {
   constructor(public payload: Error | string) {}
 }
 
+export class SearchCourses implements Action {
+  readonly type = CoursesActionTypes.SEARCH_COURSES;
+  constructor(public payload: string) { }
+}
+
+export class SearchCoursesSuccess implements Action {
+  readonly type = CoursesActionTypes.SEARCH_COURSES_SUCCESS;
+  constructor(public payload: CoursesListItemModel[]) { }
+}
+
+export class SearchCoursesError implements Action {
+  readonly type = CoursesActionTypes.SEARCH_COURSES_ERROR;
+  constructor(public payload: Error | string) {}
+}
+
 export class DeleteCourse implements Action {
   readonly type = CoursesActionTypes.DELETE_COURSE;
   constructor(public payload: CoursesListItemModel) { }
@@ -106,6 +124,9 @@ export type CoursesActions =
   | UpdateCourse
   | UpdateCourseSuccess
   | UpdateCourseError
+  | SearchCourses
+  | SearchCoursesSuccess
+  | SearchCoursesError
   | DeleteCourse
   | DeleteCourseSuccess
   | DeleteCourseError;

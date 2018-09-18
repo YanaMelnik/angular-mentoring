@@ -25,7 +25,8 @@ export function coursesReducer(
         data,
         loading: false,
         loaded: true,
-        selectedCourse: null
+        selectedCourse: null,
+        searchCourse: null
       };
     }
 
@@ -116,6 +117,38 @@ export function coursesReducer(
       const error = action.payload;
       return {
         ...state,
+        error
+      };
+    }
+
+    case CoursesActionTypes.SEARCH_COURSES: {
+      console.log('SEARCH_COURSES action being handled!');
+      const searchCourse = action.payload;
+      return {
+        ...state,
+        loading: true,
+        searchCourse
+      };
+    }
+
+    case CoursesActionTypes.SEARCH_COURSES_SUCCESS: {
+      console.log('SEARCH_COURSES_SUCCESS action being handled!');
+      const data = [...<Array<CoursesListItemModel>>action.payload];
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        data
+      };
+    }
+
+    case CoursesActionTypes.SEARCH_COURSES_ERROR: {
+      console.log('SEARCH_COURSES_ERROR action being handled!');
+      const error = action.payload;
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
         error
       };
     }

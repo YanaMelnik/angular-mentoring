@@ -81,8 +81,24 @@ export class CoursesEffects {
     )
   );
 
+  // @Effect()
+  // deleteCourse$: Observable<Action[]>  = this.actions$.pipe(
+  //   ofType<CoursesActions.DeleteCourse>(CoursesActions.CoursesActionTypes.DELETE_COURSE),
+  //   pluck('payload'),
+  //   concatMap((payload: CoursesListItemModel) =>
+  //     this.coursesService.removeCoursesItem(payload.id).pipe(
+  //       map(() => {
+  //           // this.store.dispatch(new CoursesActions.GetCourses());
+  //           return [new CoursesActions.GetCourses(), new CoursesActions.DeleteCourseSuccess()];
+  //         }
+  //       ),
+  //       catchError(error => of([new CoursesActions.DeleteCourseError(error)]))
+  //     )
+  //   )
+  // ); // TODO it is dose not work
+
   @Effect()
-  deleteCourse$: Observable<Action> = this.actions$.pipe(
+  deleteCourse$: Observable<Action>  = this.actions$.pipe(
     ofType<CoursesActions.DeleteCourse>(CoursesActions.CoursesActionTypes.DELETE_COURSE),
     pluck('payload'),
     concatMap((payload: CoursesListItemModel) =>
@@ -97,4 +113,15 @@ export class CoursesEffects {
     )
   );
 
+  @Effect()
+  searchCourses$: Observable<Action> = this.actions$.pipe(
+    ofType<CoursesActions.SearchCourses>(CoursesActions.CoursesActionTypes.SEARCH_COURSES),
+    pluck('payload'),
+    switchMap((payload: string) =>
+      this.coursesService.searchCourseItem(payload).pipe(
+        map(res => new CoursesActions.SearchCoursesSuccess(res)),
+        catchError(error => of(new CoursesActions.SearchCoursesError(error)))
+      )
+    )
+  );
 }
